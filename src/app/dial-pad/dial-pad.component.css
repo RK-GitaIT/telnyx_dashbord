@@ -1,0 +1,7 @@
+/* Basic styles to center content and add spacing */
+:host {
+    display: block;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  

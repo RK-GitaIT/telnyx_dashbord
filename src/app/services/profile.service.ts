@@ -8,14 +8,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class ProfileService {
 
-  private selectedProfileSubject = new BehaviorSubject<any>({
-    profileId: '',
-    profileName: '',
-    phoneNumber: ''
-  });
+  private selectedProfileSubject = new BehaviorSubject<any>(null); 
+  selectedProfile$ = this.selectedProfileSubject.asObservable(); 
 
-  selectedProfile$ = this.selectedProfileSubject.asObservable();
-
+  // Function to update the selected profile
+  setSelectedProfile(profile: any) {
+    this.selectedProfileSubject.next(profile);
+  }
   private apiUrl = environment.apiUrl + '/' + 'messaging_profiles';
   
     constructor(private http: HttpClient) {}
@@ -27,8 +26,5 @@ export class ProfileService {
     getProfilesAssociatedPhonenumbers(id: string): Observable<any> {
       return this.http.get(this.apiUrl + '/'+ id + '/' + 'phone_numbers');
     }
-
-    setSelectedProfile(profile: any) {
-      this.selectedProfileSubject.next(profile);
-    }
+    
 }

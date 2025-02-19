@@ -11,13 +11,13 @@ export class SmsService {
 
   constructor(private http: HttpClient) {}
 
-  sendSms(to: string, from: string, profileId: string, message: string): Observable<any> {
+  sendSms(to: string, from: string, profileId: string, webhook_url : string, message: string): Observable<any> {
     const payload = {
       from: from,
       messaging_profile_id: profileId, 
       to: to,
       text: message,
-      webhook_url:  null,//'https://mysite.com/7420/updates',
+      webhook_url:  webhook_url,//'https://mysite.com/7420/updates',
       webhook_failover_url: null, //'https://mysite.com/7420/backup/updates',
       use_profile_webhooks: true,
       type: "MMS",

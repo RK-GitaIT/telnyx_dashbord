@@ -1,0 +1,13 @@
+<div class="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+    <h2 class="text-xl font-bold mb-4">WebRTC Voice Call</h2>
+    
+    <!-- Remote audio element to play the incoming audio -->
+    <audio #remoteAudio autoplay></audio>
+    
+    <div class="flex space-x-4 mt-4">
+      <button (click)="startCall()" class="bg-green-500 text-white px-4 py-2 rounded">Start Call</button>
+      <button (click)="endCall()" class="bg-red-500 text-white px-4 py-2 rounded">End Call</button>
+    </div>
+    
+    <!-- For demonstration, you could also include a section to display call status, etc. -->
+  </div>

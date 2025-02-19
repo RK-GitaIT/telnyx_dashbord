@@ -15,10 +15,10 @@ export class SidebarComponent implements OnInit {
   constructor(private profileService: ProfileService) {}
 
   ngOnInit() {
-    // Subscribe to profile changes
+
     this.profileService.selectedProfile$.subscribe(profile => {
       if (profile) {
-        this.profileName = profile.name; // Update profile name dynamically
+        this.profileName = profile.name; 
       }
     });
   }

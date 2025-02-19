@@ -18,6 +18,7 @@ export class SendmsgComponent implements OnInit {
   selectedProfile = {
     profileId: '',
     profileName: '',
+    webhook_url: '',
   };
 
   from: string = '';
@@ -83,7 +84,7 @@ export class SendmsgComponent implements OnInit {
       return;
     }
 
-    this.smsService.sendSms(this.to, this.from, this.selectedProfile.profileId, this.message).subscribe(
+    this.smsService.sendSms(this.to, this.from, this.selectedProfile.profileId, this.selectedProfile.webhook_url, this.message).subscribe(
       (response) => {
         console.log('Message sent successfully', response);
         alert('Message sent!');
