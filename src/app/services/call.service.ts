@@ -33,7 +33,7 @@ export class CallService {
           // The webhook URL where Telnyx will send subsequent call events
           webhook_url: webhookUrl,
           // Audio greeting URL (modern example hosted on a CDN, replace with your actual URL)
-          audio_url: "https://telnyx-dashbord-gitait-dev.vercel.app/assets/sounds/greeting.mp3",
+          audio_url: "https://github.com/RK-GitaIT/telnyx_dashbord/blob/main/assets/sounds/greeting.mp3",
           // Streaming configuration for real‑time media
           stream_url: "wss://telnyx-dashbord-gitait-dev.vercel.app/websocket",
           stream_track: "both_tracks",  // Options: "inbound_track", "outbound_track", "both_tracks"

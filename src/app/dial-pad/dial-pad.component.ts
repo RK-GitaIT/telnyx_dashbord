@@ -102,13 +102,10 @@ export class DialPadComponent {
     this.dialedNumber = this.dialedNumber.slice(0, -1);
   }
 
-  // When the user clicks "Dial", initiate the Telnyx call,
-  // connect to the streaming server, and start the WebRTC offer
   async dialNumber(): Promise<void> {
     if (!this.dialedNumber) return;
     console.log(this.dialedNumber, this.selectedProfile.webhook_event_url, "dial click");
-
-    // Initiate call via the backend CallService
+  
     this.callService.dialNumber(
       this.dialedNumber,
       this.from,
@@ -119,58 +116,38 @@ export class DialPadComponent {
         this.callLegId = response.data.call_leg_id;
         this.callStatus = 'ringing';
         console.log('Call initiated:', response);
-
-        // Connect to the streaming server using StreamService
-        // (The stream_url must match the one sent in your payload)
+  
         this.streamService.connect("wss://https://telnyx-dashbord-gitait-dev.vercel.app/websocket");
-
-        // Create an SDP offer for the WebRTC connection
+  
         try {
           const offer = await this.webRTCService.createOffer();
           console.log('WebRTC Offer created:', offer);
-          // TODO: Send the SDP offer via your signaling server to the remote peer
         } catch (err) {
           console.error('Error creating WebRTC offer:', err);
         }
       },
       (error) => {
         console.error('Dial error:', error);
+        alert('Call failed to initiate. Please check your network and try again.');
+        this.callStatus = 'idle';
       }
     );
   }
-
+  
   answerCall(): void {
     if (!this.callLegId) return;
     this.callService.answerCall(this.callLegId).subscribe(
       (response) => {
         this.callStatus = 'in-call';
         console.log('Call answered:', response);
-        // TODO: Process the remote SDP answer via your signaling mechanism
       },
       (error) => {
         console.error('Answer error:', error);
+        alert('Failed to answer the call. Please try again.');
       }
     );
   }
-
-  hangUpCall(): void {
-    if (!this.callLegId) return;
-    this.callService.hangUpCall(this.callLegId).subscribe(
-      (response) => {
-        this.callStatus = 'idle';
-        this.callLegId = null;
-        this.isMuted = false;
-        this.isOnHold = false;
-        console.log('Call ended:', response);
-        this.webRTCService.closeConnection();
-        this.streamService.disconnect();
-      },
-      (error) => {
-        console.error('Hangup error:', error);
-      }
-    );
-  }
-
+  
   muteCall(): void {
     if (!this.callLegId) return;
     this.callService.muteCall(this.callLegId).subscribe(
@@ -222,4 +199,24 @@ export class DialPadComponent {
       }
     );
   }
+
+  hangUpCall(): void {
+    if (!this.callLegId) return;
+    this.callService.hangUpCall(this.callLegId).subscribe(
+      (response) => {
+        this.callStatus = 'idle';
+        this.callLegId = null;
+        this.isMuted = false;
+        this.isOnHold = false;
+        console.log('Call ended:', response);
+        this.webRTCService.closeConnection();
+        this.streamService.disconnect();
+      },
+      (error) => {
+        console.error('Hangup error:', error);
+        alert('Failed to disconnect the call. Please try again.');
+      }
+    );
+  }
+  
 }
