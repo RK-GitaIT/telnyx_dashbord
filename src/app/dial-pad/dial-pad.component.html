@@ -1,0 +1,41 @@
+<div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-semibold">Dial Pad</h2>
+    
+    <!-- Display dialed number -->
+    <div class="bg-gray-100 p-4 rounded-lg text-center mb-4">
+        <span class="text-xl font-bold">{{ dialedNumber }}</span>
+    </div>
+
+    <!-- Dial Pad Buttons -->
+    <div class="grid grid-cols-3 gap-4 mt-4 text-center">
+        <button (click)="addToDialedNumber('1')" class="p-6 bg-gray-200 rounded-full text-xl">1</button>
+        <button (click)="addToDialedNumber('2')" class="p-6 bg-gray-200 rounded-full text-xl">2</button>
+        <button (click)="addToDialedNumber('3')" class="p-6 bg-gray-200 rounded-full text-xl">3</button>
+        <button (click)="addToDialedNumber('4')" class="p-6 bg-gray-200 rounded-full text-xl">4</button>
+        <button (click)="addToDialedNumber('5')" class="p-6 bg-gray-200 rounded-full text-xl">5</button>
+        <button (click)="addToDialedNumber('6')" class="p-6 bg-gray-200 rounded-full text-xl">6</button>
+        <button (click)="addToDialedNumber('7')" class="p-6 bg-gray-200 rounded-full text-xl">7</button>
+        <button (click)="addToDialedNumber('8')" class="p-6 bg-gray-200 rounded-full text-xl">8</button>
+        <button (click)="addToDialedNumber('9')" class="p-6 bg-gray-200 rounded-full text-xl">9</button>
+        <button (click)="addToDialedNumber('*')" class="p-6 bg-gray-200 rounded-full text-xl">*</button>
+        <button (click)="addToDialedNumber('0')" class="p-6 bg-gray-200 rounded-full text-xl">0</button>
+        <button (click)="addToDialedNumber('#')" class="p-6 bg-gray-200 rounded-full text-xl">#</button>
+    </div>
+
+    <!-- Clear and Delete Button -->
+    <div class="flex justify-between mt-4">
+        <!-- Clear All Button -->
+        <button (click)="clearAll()" class="p-4 bg-red-500 rounded-full text-white text-xl w-full">
+            Clear All
+        </button>
+        <!-- Delete Last Digit Button -->
+        <button (click)="deleteLastDigit()" class="p-4 bg-yellow-500 rounded-full text-white text-xl w-full">
+            Delete
+        </button>
+    </div>
+
+    <!-- Call Button -->
+    <div class="flex justify-center mt-4">
+        <button (click)="makeCall()" class="p-6 bg-green-500 rounded-full text-white text-xl">📞</button>
+    </div>
+</div>

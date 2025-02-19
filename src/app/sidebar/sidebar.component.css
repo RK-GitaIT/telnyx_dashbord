@@ -1,0 +1,16 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .sidebar {
+    flex-grow: 1;
+    background-color: #1e3a8a; /* Adjust to your desired blue color */
+  }
+  
+  .sidebar-nav {
+    flex-grow: 1;
+    overflow-y: auto; /* Optional: If you have many items, this ensures scrolling */
+  }
+  

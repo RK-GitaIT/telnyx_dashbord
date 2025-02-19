@@ -1,0 +1,14 @@
+button {
+    transition: background 0.2s;
+  }
+  @media (max-width: 640px) {
+    div.w-full.max-w-3xl {
+        width: 95%;
+    }
+}
+
+@media (max-width: 768px) {
+    textarea {
+        height: 50vh;
+    }
+}

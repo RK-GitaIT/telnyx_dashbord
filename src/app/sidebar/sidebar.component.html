@@ -1,0 +1,23 @@
+<div class="w-64 bg-blue-900 text-white p-4 space-y-6 h-full">
+    <div class="flex items-center space-x-2">
+        <span class="text-lg font-semibold">{{ profileName }}</span> <!-- Updated dynamically -->
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+        <ul class="space-y-4">
+            <li class="flex items-center space-x-2 cursor-pointer" [routerLink]="['/sendmsg']">
+                <span>📩</span><span>Messages</span>
+            </li>
+            <li class="flex items-center space-x-2 cursor-pointer" [routerLink]="['/phone']">
+                <span>📞</span><span>Phone</span>
+            </li>
+            <li class="flex items-center space-x-2 cursor-pointer" [routerLink]="['/contacts']">
+                <span>📁</span><span>Contacts</span>
+            </li>
+            <li class="flex items-center space-x-2 cursor-pointer" [routerLink]="['/settings']">
+                <span>⚙️</span><span>Settings</span>
+            </li>
+        </ul>
+    </nav>
+</div>
