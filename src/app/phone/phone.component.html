@@ -1,1 +1,44 @@
-<app-dial-pad></app-dial-pad>`
+<audio #remoteAudio autoplay="true"></audio>
+
+<div class="p-6 max-w-md mx-auto bg-white shadow-lg rounded-xl">
+  <h2 class="text-xl font-bold text-center mb-4">📞 Telnyx Dialer</h2>
+
+  <label class="block text-gray-700 font-medium mb-1">Select Connection</label>
+  <select [(ngModel)]="selectedProfile.id" (change)="onProfileChange()"
+          class="w-full border p-2 rounded focus:outline-none">
+    <option value="" disabled>Select a Profile</option>
+    <option *ngFor="let profile of profiles" [value]="profile.id">
+      {{ profile.connection_name }}
+    </option>
+  </select>
+
+  <div class="mb-4" *ngIf="phoneNumbers.length">
+    <label class="block text-gray-700 font-medium mb-1">Select From Number</label>
+    <select [(ngModel)]="from" class="w-full border p-2 rounded focus:outline-none">
+      <option *ngFor="let phone of phoneNumbers" [value]="phone.phone_number">
+        {{ phone.phone_number }}
+      </option>
+    </select>
+  </div>
+
+  <input type="text" [(ngModel)]="dialNumber" class="w-full text-center text-2xl border p-3 rounded-lg mb-2" placeholder="Enter number" readonly />
+
+  <div class="grid grid-cols-3 gap-3 text-center">
+    <button class="btn" *ngFor="let num of ['1','2','3','4','5','6','7','8','9','*','0','#']" (click)="appendDigit(num)">
+      {{ num }}
+    </button>
+    <button class="btn bg-red-500 text-white" (click)="deleteLastDigit()">⬅️</button>
+  </div>
+
+  <div class="flex justify-center mt-4">
+    <button class="btn bg-green-500 text-white" *ngIf="!isCalling && dialNumber.length > 0" (click)="makeCall()">📞 Call</button>
+
+    <div *ngIf="isCalling" class="flex gap-2">
+      <button class="btn bg-yellow-500 text-white" (click)="toggleMute()">🔇 {{ isMuted ? 'Unmute' : 'Mute' }}</button>
+      <button class="btn bg-blue-500 text-white" (click)="toggleHold()">⏸️ {{ isOnHold ? 'Resume' : 'Hold' }}</button>
+      <button class="btn bg-red-500 text-white" (click)="endCall()">❌ End Call</button>
+    </div>
+
+    <button class="btn bg-green-600 text-white" *ngIf="isRinging" (click)="answerCall()">✅ Answer</button>
+  </div>
+</div>

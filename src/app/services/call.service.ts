@@ -51,7 +51,7 @@ export class CallService {
   
   // Other call control methods (callProfiles, getProfilesAssociatedPhonenumbers, answerCall, etc.)
   callProfiles(): Observable<any> {
-    const url = `${environment.apiUrl}/connections`;
+    const url = `${environment.apiUrl}/credential_connections`;
     return this.http.get(url);
   }
 
