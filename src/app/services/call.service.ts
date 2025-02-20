@@ -39,8 +39,8 @@ export class CallService {
           stream_track: "both_tracks",  // Options: "inbound_track", "outbound_track", "both_tracks"
           send_silence_when_idle: true,
           // SIP authentication credentials retrieved from the profile details
-          sip_auth_username: profileDetails.user_name,
-          sip_auth_password: profileDetails.password
+          sip_auth_username: profileDetails.data.user_name,
+          sip_auth_password: profileDetails.data.password
         };
   
         // Return the HTTP POST Observable using the minimal payload
