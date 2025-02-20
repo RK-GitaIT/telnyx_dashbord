@@ -20,6 +20,9 @@ export class DialPadComponent {
     profiles: any[] = [];
     phoneNumbers: any[] = [];
     isRinging: boolean = false;
+    isCallStatus: boolean = false;
+    callDuration: string = '00:00';
+    private timerInterval: any;
   
     selectedProfile = {
       id: '',
@@ -30,6 +33,8 @@ export class DialPadComponent {
     };
   
     log = "";
+
+    private beepSound = new Audio('assets/beep.mp3');
   
     constructor(private calltelnyxService: CalltelnyxService,
         private callService: CallService) {}
@@ -48,8 +53,9 @@ export class DialPadComponent {
     }
   
     onProfileChange() {
+      console.log(this.selectedProfile);
       if (!this.selectedProfile.id) return;
-  
+      console.log(this.selectedProfile);
       const selected = this.profiles.find(
         (profile) => profile.id === this.selectedProfile.id
       );
@@ -57,6 +63,8 @@ export class DialPadComponent {
         this.selectedProfile.profileName = selected.connection_name;
         this.selectedProfile.username = selected.user_name;
         this.selectedProfile.password = selected.password;
+
+        console.log(this.selectedProfile);
         // Fetch associated phone numbers
         this.callService
           .getProfilesAssociatedPhonenumbers(this.selectedProfile.id)
@@ -80,10 +88,19 @@ export class DialPadComponent {
   
     appendDigit(digit: string) {
       this.dialedNumber += digit;
+      this.beepSound.currentTime = 0;  // Restart sound
+      this.beepSound.play();
+    }
+
+    dialedNumbervalue(){
+      this.beepSound.currentTime = 0;  // Restart sound
+      this.beepSound.play();
     }
   
     deleteLastDigit() {
       this.dialedNumber = this.dialedNumber.slice(0, -1);
+      this.beepSound.currentTime = 0;  // Restart sound
+      this.beepSound.play();
     }
   
   
@@ -102,15 +119,36 @@ export class DialPadComponent {
   
     call() {
       if (this.dialedNumber) {
+        this.isCallStatus = true;
         this.calltelnyxService.call(this.dialedNumber, this.from);
+        this.startCallTimer();
+        this.callStatus = 'in-call';
       }
     }
   
     hangup() {
+      this.isCallStatus = false;
       this.calltelnyxService.hangup();
+      clearInterval(this.timerInterval);
+      this.callDuration = '00:00';
+      this.callStatus = 'idle';
+      this.beepSound.currentTime = 0;  // Restart sound
+      this.beepSound.play();
     }
 
     answerCall(){
+      this.beepSound.currentTime = 0;  // Restart sound
+      this.beepSound.play();
+    }
 
+    startCallTimer() {
+      let seconds = 0;
+      clearInterval(this.timerInterval);
+      this.timerInterval = setInterval(() => {
+        seconds++;
+        const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const secs = (seconds % 60).toString().padStart(2, '0');
+        this.callDuration = `${mins}:${secs}`;
+      }, 1000);
     }
 }

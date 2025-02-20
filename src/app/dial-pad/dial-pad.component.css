@@ -1,68 +1,70 @@
-.dialpad-container {
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 16px;
-  text-align: center;
-  background: #f7f7f7;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.input-group {
-  margin-bottom: 16px;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 4px;
-  font-weight: bold;
-}
-
-.input-group input {
+.dial-pad-container {
   width: 100%;
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f0f4f8;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
-
-.digits {
+.profile-section, .phone-number-section {
+  margin-bottom: 20px;
+}
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+.dial-display {
+  font-size: 2rem;
+  padding: 15px;
+  border: 2px solid #ccc;
+  margin: 20px 0;
+  border-radius: 8px;
+  background: white;
+}
+.dial-pad-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin: 16px 0;
+  gap: 10px;
 }
-
-.digits button {
-  padding: 16px;
-  font-size: 16px;
-  background: #ddd;
+.dial-pad-grid button {
+  padding: 20px;
+  font-size: 1.5rem;
+  border-radius: 50%;
   border: none;
-  border-radius: 4px;
+  background-color: #08548A;
+  color: white;
   cursor: pointer;
 }
-
-.digits button.delete {
-  grid-column: span 3;
-  background: #e74c3c;
-  color: #fff;
-}
-
-.actions button {
-  margin: 8px;
-  padding: 12px 16px;
-  font-size: 16px;
+.dial-actions button {
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 20px;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.actions button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-
-.status {
-  margin-top: 16px;
   font-weight: bold;
+  cursor: pointer;
+}
+.call-btn {
+  background-color: #28a745;
+  color: white;
+}
+.hangup-btn {
+  background-color: #dc3545;
+  color: white;
+}
+.call-status.connected p {
+  color: green;
+}
+.call-status.in-call p {
+  color: orange;
+}
+@media (max-width: 600px) {
+  .dial-pad-grid button {
+    padding: 15px;
+  }
+  .dial-display {
+    font-size: 1.5rem;
+  }
 }
