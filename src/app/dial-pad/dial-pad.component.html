@@ -1,10 +1,6 @@
-<div class="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-    <!-- Remote Audio Element -->
-    <audio #remoteAudio autoplay></audio>
-  
-    <div class="bg-white rounded-lg shadow p-6 w-full max-w-md">
-      <!-- Profile Selector -->
-      <div class="mb-4">
+
+<div class="dialpad-container">    
+    <div class="input-group" >
         <label class="block text-gray-700 font-medium mb-1">Select Profile</label>
         <select [(ngModel)]="selectedProfile" (change)="onProfileChange()"
                 class="w-full border p-2 rounded focus:outline-none">
@@ -16,7 +12,7 @@
       </div>
       
       <!-- Phone Number Selector -->
-      <div class="mb-4" *ngIf="phoneNumbers && phoneNumbers.length">
+      <div class="input-group" *ngIf="phoneNumbers && phoneNumbers.length">
         <label class="block text-gray-700 font-medium mb-1">Select From Number</label>
         <select [(ngModel)]="from" class="w-full border p-2 rounded focus:outline-none">
           <option *ngFor="let phone of phoneNumbers" [value]="phone.phone_number">
@@ -24,76 +20,32 @@
           </option>
         </select>
       </div>
-      
-      <!-- Dialed Number Display -->
-      <div class="bg-gray-100 p-4 rounded-lg text-center mb-4">
-        <span class="text-xl font-bold">{{ dialedNumber }}</span>
-      </div>
-      
-      <!-- Dial Pad Buttons -->
-      <div class="grid grid-cols-3 gap-4 text-center mb-4">
-        <button (click)="addToDialedNumber('1')" class="p-4 bg-gray-200 rounded-full text-xl">1</button>
-        <button (click)="addToDialedNumber('2')" class="p-4 bg-gray-200 rounded-full text-xl">2</button>
-        <button (click)="addToDialedNumber('3')" class="p-4 bg-gray-200 rounded-full text-xl">3</button>
-        <button (click)="addToDialedNumber('4')" class="p-4 bg-gray-200 rounded-full text-xl">4</button>
-        <button (click)="addToDialedNumber('5')" class="p-4 bg-gray-200 rounded-full text-xl">5</button>
-        <button (click)="addToDialedNumber('6')" class="p-4 bg-gray-200 rounded-full text-xl">6</button>
-        <button (click)="addToDialedNumber('7')" class="p-4 bg-gray-200 rounded-full text-xl">7</button>
-        <button (click)="addToDialedNumber('8')" class="p-4 bg-gray-200 rounded-full text-xl">8</button>
-        <button (click)="addToDialedNumber('9')" class="p-4 bg-gray-200 rounded-full text-xl">9</button>
-        <button (click)="addToDialedNumber('*')" class="p-4 bg-gray-200 rounded-full text-xl">*</button>
-        <button (click)="addToDialedNumber('0')" class="p-4 bg-gray-200 rounded-full text-xl">0</button>
-        <button (click)="addToDialedNumber('#')" class="p-4 bg-gray-200 rounded-full text-xl">#</button>
-      </div>
-      
-      <!-- Clear and Delete Buttons -->
-      <div class="flex justify-between mb-4">
-        <button (click)="clearAll()" class="flex-1 mr-2 p-3 bg-red-500 rounded-full text-white text-lg">Clear All</button>
-        <button (click)="deleteLastDigit()" class="flex-1 ml-2 p-3 bg-yellow-500 rounded-full text-white text-lg">Delete</button>
-      </div>
-      
-      <!-- Call Control Buttons -->
-      <div class="flex justify-around mb-4">
-        <!-- Dial / Answer Buttons -->
-        <button *ngIf="callStatus === 'idle'" (click)="dialNumber()"
-                class="p-3 bg-green-500 rounded-full text-white text-lg">
-          📞 Dial
-        </button>
-        <button *ngIf="callStatus === 'ringing'" (click)="answerCall()"
-                class="p-3 bg-blue-500 rounded-full text-white text-lg">
-          📥 Answer
-        </button>
-        <!-- Hangup Button -->
-        <button *ngIf="callStatus !== 'idle'" (click)="hangUpCall()"
-                class="p-3 bg-red-600 rounded-full text-white text-lg">
-          ✖ Hangup
-        </button>
-      </div>
-      
-      <!-- Additional Call Actions (Mute, Hold) -->
-      <div *ngIf="callStatus === 'in-call'" class="flex justify-around mb-4">
-        <button *ngIf="!isMuted" (click)="muteCall()"
-                class="p-3 bg-gray-700 rounded-full text-white text-lg">
-          🔇 Mute
-        </button>
-        <button *ngIf="isMuted" (click)="unmuteCall()"
-                class="p-3 bg-gray-700 rounded-full text-white text-lg">
-          🔊 Unmute
-        </button>
-        <button *ngIf="!isOnHold" (click)="holdCall()"
-                class="p-3 bg-orange-500 rounded-full text-white text-lg">
-          ⏸ Hold
-        </button>
-        <button *ngIf="isOnHold" (click)="resumeCall()"
-                class="p-3 bg-orange-500 rounded-full text-white text-lg">
-          ▶ Resume
-        </button>
-      </div>
-      
-      <!-- Call Status Display -->
-      <div class="text-center text-sm text-gray-600">
-        <span>Status: {{ callStatus }}</span>
-      </div>
+    
+    <!-- Display dialed number (read-only) -->
+    <div class="input-group">
+      <label>Dialed Number:</label>
+      <input type="text" [value]="dialedNumber" placeholder="Dialed Number" readonly>
+    </div>
+    
+    <!-- Dialpad buttons -->
+    <div class="digits">
+      <button *ngFor="let digit of ['1','2','3','4','5','6','7','8','9','*','0','#', '+']" (click)="appendDigit(digit)">
+        {{ digit }}
+      </button>
+      <button class="delete" (click)="deleteLastDigit()">Del</button>
+    </div>
+    
+    <!-- Call control buttons -->
+    <div class="actions">
+      <button (click)="call()" class="btn btn-success">Call</button>
+      <button (click)="hangup()" *ngIf="callStatus !== 'idle'">Hang Up</button>
+      <button *ngIf="isRinging" (click)="answerCall()">Answer</button>
+    </div>
+    
+    <!-- Display current call status -->
+    <div class="status">
+      Status: {{ callStatus }}
     </div>
   </div>
-  
+<video id="localVideo" autoplay muted></video>
+<video id="remoteVideo" autoplay></video>
