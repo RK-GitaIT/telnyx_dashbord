@@ -42,10 +42,6 @@
       <button *ngIf="isRinging" (click)="answerCall()">Answer</button>
     </div>
     
-    <!-- Display current call status -->
-    <div class="status">
-      Status: {{ callStatus }}
-    </div>
   </div>
 <video id="localVideo" autoplay muted></video>
 <video id="remoteVideo" autoplay></video>

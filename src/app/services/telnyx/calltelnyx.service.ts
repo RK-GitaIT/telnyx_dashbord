@@ -26,6 +26,7 @@ export class CalltelnyxService {
 
   setCredentials(login: string, password: string, login_token: string) {
     this.credentials = { login, password, login_token };
+    this.initializeClient();
   }
 
   initializeClient() {
