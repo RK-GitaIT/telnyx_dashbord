@@ -55,6 +55,11 @@ export class CallService {
     return this.http.get(url);
   }
 
+  call_control_applicationsProfiles(): Observable<any> {
+    const url = `${environment.apiUrl}/call_control_applications`;
+    return this.http.get(url);
+  }
+
   getProfileFullDetails(id: string): Observable<any> {
     const url = `${environment.apiUrl}/credential_connections/${id}`;
     return this.http.get(url);

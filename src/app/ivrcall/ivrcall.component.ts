@@ -33,13 +33,16 @@ export class IvrcallComponent implements OnInit {
     password: '',
   };
 
-  constructor(private telnyxservice: TelnyxService,private profileService: ProfileService, private calltelnyxService: CalltelnyxService,private callService: CallService) {}
+  constructor(private telnyxservice: TelnyxService,
+    private profileService: ProfileService,
+     private callService: CallService) {}
 
   async ngOnInit() {
     // Load profiles from backend
-    this.callService.callProfiles().subscribe(
+    this.callService.call_control_applicationsProfiles().subscribe(
       (data:any) => {
         this.profiles = data.data;
+        console.log(this.profiles, "call controll profiles");
         this.selectedProfile.id = this.profiles[0].id;
         this.onProfileChange();
         console.log('Messaging Profiles:', this.profiles);
@@ -48,24 +51,6 @@ export class IvrcallComponent implements OnInit {
         console.error('Error fetching profiles', error);
       }
     );
-    this.calltelnyxService.callStatus$.subscribe(status => {
-      this.callStatus = status;
-      
-      console.log("Status Initial", this.callStatus);
-    });
-  }
-
-  
-  initializeTelnyxCredentials(login: string, password: string, login_token: string) {
-    this.calltelnyxService.setCredentials(login, password, login_token);
-    this.calltelnyxService.initializeClient();
-    this.connect();
-    this.callStatus = "Connecting...";
-  }
-
-  connect() {
-    this.log = "Connecting...";
-    this.calltelnyxService.connect();
   }
 
 
@@ -103,11 +88,6 @@ export class IvrcallComponent implements OnInit {
             if (this.phoneNumbers.length > 0) {
               this.from = this.phoneNumbers[0].phone_number;
               console.log("Initial call");
-              this.initializeTelnyxCredentials(
-                this.selectedProfile.username,
-                this.selectedProfile.password,
-                environment.authToken
-              );
             } else {
               this.from = '';
             }

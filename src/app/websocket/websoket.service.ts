@@ -12,10 +12,15 @@ export class WebsocketService {
   constructor() {}
 
   connect(url: string): void {
-    this.socket = new WebSocket(url);
+    this.socket = new WebSocket(url);  // Establish WebSocket connection
 
+    // Handle incoming messages
     this.socket.onmessage = (event) => {
-      this.handleMessage(event);
+      const message = JSON.parse(event.data);
+      console.log("Received WebSocket message:", message);
+
+      // Notify other parts of the application (e.g., TelnyxService)
+      this.messageSubject.next(message);  // Emits message to listeners
     };
 
     this.socket.onerror = (error) => {
@@ -29,11 +34,6 @@ export class WebsocketService {
     this.socket.onclose = (event) => {
       console.log('WebSocket connection closed', event);
     };
-  }
-
-  private handleMessage(event: MessageEvent): void {
-    const data = JSON.parse(event.data);
-    this.messageSubject.next(data);
   }
 
   sendMessage(message: any): void {
