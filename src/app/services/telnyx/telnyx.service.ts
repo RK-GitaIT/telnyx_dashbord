@@ -42,7 +42,7 @@ export class TelnyxService {
       }
 
       // WebSocket URL for handling call events
-      const websocketUrl = "wss://telnyx-dashbord-gitait-dev.vercel.app/websocket";
+      const websocketUrl = "https://telnyx-dashbord-gitait-dev.vercel.app/webhook";
       
       // Connect WebSocket
       this.websocketService.connect(websocketUrl);  // Start WebSocket connection
