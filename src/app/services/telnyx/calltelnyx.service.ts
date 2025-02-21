@@ -16,6 +16,9 @@ export class CalltelnyxService {
   notification$ = this.notificationSubject.asObservable();
   log = "";
 
+  private callStatusSubject = new BehaviorSubject<string>('');
+  callStatus$ = this.callStatusSubject.asObservable();
+
   private credentials = {
     login: '',
     password: '',
@@ -78,7 +81,8 @@ export class CalltelnyxService {
 
   call(destinationNumber: string, callerNumber: string) {
     if (!this.client) return;
-    this.client.newCall({
+
+    const response =  this.client.newCall({
       destinationNumber,
       callerNumber,
       forceRelayCandidate: false,
@@ -87,6 +91,7 @@ export class CalltelnyxService {
       localElement: "localVideo",
       remoteElement: "remoteVideo",
     });
+    console.log(response, "call response");
   }
 
   hangup() {
@@ -100,6 +105,7 @@ export class CalltelnyxService {
   private handleNotification(notification: INotification) {
     if (notification.type === "callUpdate" && notification.call) {
       const call = notification.call as ExtendedCall;
+      this.callStatusSubject.next(call.state);
       console.log("Call State: ", call.state);
     } else if (notification.type === "userMediaError") {
       alert(`${notification.error}. \nPlease check your microphone/webcam.`);

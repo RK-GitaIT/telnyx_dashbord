@@ -22,6 +22,7 @@ export class DialPadComponent {
     isRinging: boolean = false;
     isCallStatus: boolean = false;
     callDuration: string = '00:00';
+    calldiscountstatus: any[] = ['hangup','destroy'];
     private timerInterval: any;
   
     selectedProfile = {
@@ -35,6 +36,7 @@ export class DialPadComponent {
     log = "";
 
     private beepSound = new Audio('assets/beep.wav');
+    private callbeepSound = new Audio('assets/callbeep.mp3');
   
     constructor(private calltelnyxService: CalltelnyxService,
         private callService: CallService) {}
@@ -52,6 +54,20 @@ export class DialPadComponent {
           console.error('Error fetching profiles', error);
         }
       );
+      this.calltelnyxService.callStatus$.subscribe(status => {
+        this.callStatus = status;
+       
+        if(this.calldiscountstatus.find(a=>a == this.callStatus)){
+          this.closeModal();
+        }
+
+        if(this.callStatus == 'active'){
+          this.callbeepSound.pause();
+          this.startCallTimer();
+        }
+
+        console.log("Status Initial", this.callStatus);
+      });
     }
   
     async onProfileChange() {
@@ -126,9 +142,8 @@ export class DialPadComponent {
     call() {
       if (this.dialedNumber) {
         this.isCallStatus = true;
+        this.callbeepSound.play();
         this.calltelnyxService.call(this.dialedNumber, this.from);
-        this.startCallTimer();
-        this.callStatus = 'in-call';
       }
     }
   
@@ -139,7 +154,7 @@ export class DialPadComponent {
       this.callDuration = '00:00';
       this.callStatus = 'idle';
       this.beepSound.currentTime = 0;  // Restart sound
-      this.beepSound.play();
+      this.callbeepSound.play();
       console.log('Call ended');
       this.closeModal();
     }

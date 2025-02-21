@@ -1,22 +1,43 @@
-<div class="w-64 bg-blue-900 text-white p-4 space-y-6 h-full">
-    <div class="flex flex-col items-start space-y-2">
-        <span class="text-lg font-semibold">{{ profileName }}</span>
-        <span class="text-sm">💰 Balance: {{ balance | number:'1.2-2' }} {{ currency }}</span> <!-- ✅ Balance display -->
+<div class="w-72 bg-[#1e3a8a] text-white p-6 space-y-8 h-full rounded-2xl shadow-2xl">
+    <!-- 💰 Balance Section with Gradient and Glow -->
+    <div class="flex flex-col items-start space-y-3 bg-gradient-to-r from-[#1e3a8a] to-blue-500 p-5 rounded-xl shadow-lg relative overflow-hidden">
+        <div class="absolute inset-0 bg-white opacity-10 rounded-xl blur-lg"></div>
+        <span class="text-2xl font-extrabold flex items-center space-x-3 relative animate-bounce">
+            <i class="fas fa-wallet text-yellow-400 text-4xl"></i>
+            <span class="tracking-wide">Balance</span>
+        </span>
+        <span class="text-3xl font-bold relative">
+            {{ balance | number:'1.2-2' }} <span class="text-xl">{{ currency }}</span>
+        </span>
     </div>
 
+    <!-- 🌐 Navigation Section with Modern Hover Effects -->
     <nav class="sidebar-nav">
-        <ul class="space-y-4">
-            <li class="flex items-center space-x-2 cursor-pointer" [routerLink]="['/sendmsg']">
-                <span>📩</span><span>Messages</span>
+        <ul class="space-y-5">
+            <li class="flex items-center space-x-3 cursor-pointer p-4 rounded-xl bg-opacity-10 hover:bg-white hover:bg-opacity-10 hover:scale-105 transition-all duration-300 ease-in-out backdrop-blur-md shadow-md"
+                [routerLink]="['/sendmsg']">
+                <i class="fas fa-envelope text-2xl text-green-300"></i>
+                <span class="text-lg font-semibold tracking-wide">Messages</span>
             </li>
-            <li class="flex items-center space-x-2 cursor-pointer" [routerLink]="['/phone']">
-                <span>📞</span><span>Phone</span>
+            <li class="flex items-center space-x-3 cursor-pointer p-4 rounded-xl bg-opacity-10 hover:bg-white hover:bg-opacity-10 hover:scale-105 transition-all duration-300 ease-in-out backdrop-blur-md shadow-md"
+                [routerLink]="['/phone']">
+                <i class="fas fa-phone text-2xl text-pink-300"></i>
+                <span class="text-lg font-semibold tracking-wide">Phone</span>
             </li>
-            <li class="flex items-center space-x-2 cursor-pointer" [routerLink]="['/contacts']">
-                <span>📁</span><span>Contacts</span>
+            <!-- <li class="flex items-center space-x-3 cursor-pointer p-4 rounded-xl bg-opacity-10 hover:bg-white hover:bg-opacity-10 hover:scale-105 transition-all duration-300 ease-in-out backdrop-blur-md shadow-md"
+                [routerLink]="['/ivr']">
+                <i class="fas fa-folder text-2xl text-orange-300"></i>
+                <span class="text-lg font-semibold tracking-wide">Ivr</span>
+            </li> -->
+            <li class="flex items-center space-x-3 cursor-pointer p-4 rounded-xl bg-opacity-10 hover:bg-white hover:bg-opacity-10 hover:scale-105 transition-all duration-300 ease-in-out backdrop-blur-md shadow-md"
+                [routerLink]="['/contacts']">
+                <i class="fas fa-address-book text-2xl text-purple-300"></i>
+                <span class="text-lg font-semibold tracking-wide">Contacts</span>
             </li>
-            <li class="flex items-center space-x-2 cursor-pointer" [routerLink]="['/settings']">
-                <span>⚙️</span><span>Settings</span>
+            <li class="flex items-center space-x-3 cursor-pointer p-4 rounded-xl bg-opacity-10 hover:bg-white hover:bg-opacity-10 hover:scale-105 transition-all duration-300 ease-in-out backdrop-blur-md shadow-md"
+                [routerLink]="['/settings']">
+                <i class="fas fa-cog text-2xl text-gray-300"></i>
+                <span class="text-lg font-semibold tracking-wide">Settings</span>
             </li>
         </ul>
     </nav>

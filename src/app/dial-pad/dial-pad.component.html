@@ -17,13 +17,15 @@
         <option *ngFor="let phone of phoneNumbers" [value]="phone.phone_number">{{ phone.phone_number }}</option>
       </select>
     </div> -->
-
+    <div>
+      <label class="text-gray-700 font-medium">Number From</label>
     <div
     class="w-80 bg-white p-4 rounded-lg shadow mb-8 flex items-center text-2xl font-semibold border border-gray-300">
-    <label> From </label>
     <input [(ngModel)]="from" disabled type="text" placeholder="Enter number"
       class="flex-1 border-none focus:outline-none text-gray-700" />
   </div>
+    </div>
+    
 
     <!-- Dialed Number Display -->
     <div
@@ -38,10 +40,16 @@
         class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-2xl font-semibold shadow hover:bg-gray-200">
         {{ digit }}
       </button>
+      <div></div>
+
       <button (click)="call()"
-        class="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center text-3xl shadow hover:bg-green-600">
-        📞
-      </button>
+      class="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center text-3xl shadow hover:bg-green-600">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="36" height="36">
+      <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.05-.24 11.05 11.05 0 003.48.56 1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 5a1 1 0 011-1h3.5a1 1 0 011 1 11.05 11.05 0 00.56 3.48 1 1 0 01-.24 1.05l-2.2 2.2z"/>
+  </svg>
+</button>
+
+
       <button (click)="deleteLastDigit()"
         class="w-20 h-20 bg-red-500 text-white rounded-full flex items-center justify-center text-2xl shadow hover:bg-red-600">
         ⌫
