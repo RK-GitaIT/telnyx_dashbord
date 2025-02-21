@@ -1,14 +1,19 @@
-button {
-    transition: background 0.2s;
+/* sendmsg.component.css */
+.toast {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    z-index: 50;
+    animation: fadeInOut 3s forwards;
   }
-  @media (max-width: 640px) {
-    div.w-full.max-w-3xl {
-        width: 95%;
-    }
-}
-
-@media (max-width: 768px) {
-    textarea {
-        height: 50vh;
-    }
-}
+  
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(20px); }
+  }
+  

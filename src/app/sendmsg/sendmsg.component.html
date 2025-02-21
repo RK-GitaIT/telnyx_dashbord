@@ -1,6 +1,6 @@
 <div class="w-full max-w-5xl p-4 flex flex-col mx-auto shadow-lg rounded-lg border border-gray-300 bg-white">
     <!-- Header -->
-    <div class="bg-blue-500 text-white p-3 rounded-t-lg flex justify-between items-center">
+    <div style="background-color: #1e3a8a;" class="bg-blue-500 text-white p-3 rounded-t-lg flex justify-between items-center">
         <span class="font-semibold">✉️ New Message</span>
         <!-- <div class="flex space-x-2">
             <span class="cursor-pointer">🔳</span>
@@ -11,17 +11,19 @@
     <!-- Input Fields -->
     <div class="p-4 flex flex-col flex-1 space-y-4">
         <!-- Profile Dropdown -->
-        <label class="text-gray-700 font-medium">Select Profile</label>
+        <!-- <label class="text-gray-700 font-medium">Select Profile</label>
         <select [(ngModel)]="selectedProfile.profileId" (change)="onProfileChange()" class="w-full border p-2 rounded focus:outline-none">
             <option value="" disabled>Select a Profile</option>
             <option *ngFor="let profile of profiles" [value]="profile.id">{{ profile.name }}</option>
         </select>
   
         <!-- Phone Number Dropdown (Only shows numbers related to the selected profile) -->
-        <label class="text-gray-700 font-medium">Select From Number</label>
+        <!-- <label class="text-gray-700 font-medium">Select From Number</label>
         <select [(ngModel)]="from" class="w-full border p-2 rounded focus:outline-none" *ngIf="phoneNumbers.length > 0">
             <option *ngFor="let phone of phoneNumbers" [value]="phone.phone_number">{{ phone.phone_number }}</option>
-        </select>
+        </select> --> 
+        <label class="text-gray-700 font-medium">Select From Number</label>
+        <input [(ngModel)]="from" disabled class="w-full border p-2 rounded focus:outline-none" placeholder="from " />
   
         <!-- To Address Input -->
         <label class="text-gray-700 font-medium">To</label>
@@ -34,6 +36,6 @@
   
     <!-- Footer -->
     <div class="flex justify-between items-center bg-gray-100 p-3 rounded-b-lg">
-        <button (click)="sendMessage()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition w-full md:w-auto">Send</button>
+        <button (click)="sendMessage()" style="background-color: #1e3a8a;" class="text-white px-4 py-2 rounded hover:bg-blue-600 transition w-full md:w-auto">Send</button>
     </div>
 </div>

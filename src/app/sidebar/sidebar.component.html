@@ -1,9 +1,9 @@
 <div class="w-64 bg-blue-900 text-white p-4 space-y-6 h-full">
-    <div class="flex items-center space-x-2">
-        <span class="text-lg font-semibold">{{ profileName }}</span> <!-- Updated dynamically -->
+    <div class="flex flex-col items-start space-y-2">
+        <span class="text-lg font-semibold">{{ profileName }}</span>
+        <span class="text-sm">💰 Balance: {{ balance | number:'1.2-2' }} {{ currency }}</span> <!-- ✅ Balance display -->
     </div>
 
-    <!-- Navigation -->
     <nav class="sidebar-nav">
         <ul class="space-y-4">
             <li class="flex items-center space-x-2 cursor-pointer" [routerLink]="['/sendmsg']">

@@ -14,6 +14,11 @@ import { CommonModule } from '@angular/common';
 export class SendmsgComponent implements OnInit {
   to: string = '';
   message: string = '';
+  from: string = '';
+  profiles: any[] = [];
+  phoneNumbers: any[] = [];
+  balance: number = 0;
+  currency: string = 'USD';
 
   selectedProfile = {
     profileId: '',
@@ -21,21 +26,34 @@ export class SendmsgComponent implements OnInit {
     webhook_url: '',
   };
 
-  from: string = '';
-  profiles: any[] = [];
-  phoneNumbers: any[] = [];
-
   constructor(private smsService: SmsService, private profileService: ProfileService) {}
 
   ngOnInit() {
+    this.fetchProfiles();
+    this.fetchBalance();
+    this.profileService.getProfileBalanceAsync();
+  }
+
+  fetchProfiles() {
     this.profileService.getMessagingProfiles().subscribe(
       (data) => {
         this.profiles = data.data;
-        console.log('Messaging Profiles:', this.profiles);
+        if (this.profiles.length > 0) {
+          this.selectedProfile.profileId = this.profiles[0].id;
+          this.onProfileChange();
+        }
       },
-      (error) => {
-        console.error('Error fetching profiles', error);
-      }
+      (error) => console.error('Error fetching profiles', error)
+    );
+  }
+
+  fetchBalance() {
+    this.profileService.getProfileBalance().subscribe(
+      (data) => {
+        this.balance = parseFloat(data.data.balance);
+        this.currency = data.data.currency;
+      },
+      (error) => console.error('Error fetching balance', error)
     );
   }
 
@@ -45,54 +63,56 @@ export class SendmsgComponent implements OnInit {
     const selected = this.profiles.find(profile => profile.id === this.selectedProfile.profileId);
     if (selected) {
       this.selectedProfile.profileName = selected.name;
-      
-      // Notify the sidebar about the selected profile
       this.profileService.setSelectedProfile(selected);
 
-      // Fetch associated phone numbers
       this.profileService.getProfilesAssociatedPhonenumbers(this.selectedProfile.profileId).subscribe(
         (data) => {
           this.phoneNumbers = data.data || [];
-          console.log('Associated Phone Numbers:', this.phoneNumbers);
-
-          if (this.phoneNumbers.length > 0) {
-            this.from = this.phoneNumbers[0].phone_number;
-          } else {
-            this.from = '';
-          }
+          this.from = this.phoneNumbers.length > 0 ? this.phoneNumbers[0].phone_number : '';
         },
-        (error) => {
-          console.error('Error fetching associated phone numbers', error);
-        }
+        (error) => console.error('Error fetching phone numbers', error)
       );
     }
   }
 
-  sendMessage() {
-    if (!this.from) {
-      alert('Please select a phone number.');
+  showToast(message: string, type: 'info' | 'success' | 'error') {
+    const toast = document.createElement('div');
+    toast.className = `fixed bottom-4 right-4 p-3 rounded-lg shadow-lg text-white ${
+      type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+    }`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => document.body.removeChild(toast), 3000);
+  }
+
+  async sendMessage() {
+    if (!this.from || !this.to || !this.message) {
+      alert('Please fill all required fields.');
       return;
     }
 
-    if (!this.to) {
-      alert('Please enter the recipient number.');
-      return;
-    }
-
-    if (!this.message) {
-      alert('Please enter the message.');
-      return;
-    }
-
-    this.smsService.sendSms(this.to, this.from, this.selectedProfile.profileId, this.selectedProfile.webhook_url, this.message).subscribe(
-      (response) => {
-        console.log('Message sent successfully', response);
-        alert('Message sent!');
-      },
-      (error) => {
-        console.error('Error sending message', error);
-        alert('Failed to send message.');
-      }
+    const confirmSend = confirm(
+      `Note: SMS will only be sent to USA numbers.\nCost: $0.004 per SMS.\nCurrent Balance: ${this.balance} ${this.currency}\n\nDo you want to proceed?`
     );
+
+    if (confirmSend) {
+      this.showToast('Sending message...', 'info');
+      this.smsService.sendSms(
+        this.to,
+        this.from,
+        this.selectedProfile.profileId,
+        this.selectedProfile.webhook_url,
+        this.message
+      ).subscribe(
+        (response) => {
+          this.showToast('✅ Message sent successfully!', 'success');
+          this.fetchBalance(); // Refresh balance after sending
+        },
+        (error) => {
+          console.error('Error sending message', error);
+          this.showToast('❌ Failed to send message.', 'error');
+        }
+      );
+    }
   }
 }

@@ -34,7 +34,7 @@ export class DialPadComponent {
   
     log = "";
 
-    private beepSound = new Audio('assets/beep.mp3');
+    private beepSound = new Audio('assets/beep.wav');
   
     constructor(private calltelnyxService: CalltelnyxService,
         private callService: CallService) {}
@@ -44,6 +44,8 @@ export class DialPadComponent {
       this.callService.callProfiles().subscribe(
         (data) => {
           this.profiles = data.data;
+          this.selectedProfile.id = this.profiles[0].id;
+          this.onProfileChange();
           console.log('Messaging Profiles:', this.profiles);
         },
         (error) => {
@@ -52,40 +54,44 @@ export class DialPadComponent {
       );
     }
   
-    onProfileChange() {
-      console.log(this.selectedProfile);
-      if (!this.selectedProfile.id) return;
-      console.log(this.selectedProfile);
-      const selected = this.profiles.find(
-        (profile) => profile.id === this.selectedProfile.id
-      );
-      if (selected) {
-        this.selectedProfile.profileName = selected.connection_name;
-        this.selectedProfile.username = selected.user_name;
-        this.selectedProfile.password = selected.password;
-
+    async onProfileChange() {
+      try {
         console.log(this.selectedProfile);
-        // Fetch associated phone numbers
-        this.callService
-          .getProfilesAssociatedPhonenumbers(this.selectedProfile.id)
-          .subscribe(
-            (data) => {
-              this.phoneNumbers = data.data || [];
-              if (this.phoneNumbers.length > 0) {
-                this.from = this.phoneNumbers[0].phone_number;
-                console.log("Initial call");
-                this.initializeTelnyxCredentials(this.selectedProfile.username, this.selectedProfile.password, environment.authToken);
-              } else {
-                this.from = '';
-              }
-            },
-            (error) => {
-              console.error('Error fetching associated phone numbers', error);
-            }
-          );
+        if (!this.selectedProfile.id) return;
+    
+        console.log(this.selectedProfile);
+        const selected = this.profiles.find(
+          (profile) => profile.id === this.selectedProfile.id
+        );
+    
+        if (selected) {
+          this.selectedProfile.profileName = selected.connection_name;
+          this.selectedProfile.username = selected.user_name;
+          this.selectedProfile.password = selected.password;
+    
+          console.log(this.selectedProfile);
+    
+          // ✅ Correct usage of async/await
+          const response = await this.callService.getProfilesAssociatedPhonenumbers(this.selectedProfile.id).toPromise();
+          this.phoneNumbers = response?.data || [];
+    
+          if (this.phoneNumbers.length > 0) {
+            this.from = this.phoneNumbers[0].phone_number;
+            console.log("Initial call");
+            this.initializeTelnyxCredentials(
+              this.selectedProfile.username,
+              this.selectedProfile.password,
+              environment.authToken
+            );
+          } else {
+            this.from = '';
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching associated phone numbers', error);
       }
     }
-  
+    
     appendDigit(digit: string) {
       this.dialedNumber += digit;
       this.beepSound.currentTime = 0;  // Restart sound
@@ -134,6 +140,8 @@ export class DialPadComponent {
       this.callStatus = 'idle';
       this.beepSound.currentTime = 0;  // Restart sound
       this.beepSound.play();
+      console.log('Call ended');
+      this.closeModal();
     }
 
     answerCall(){
@@ -150,5 +158,9 @@ export class DialPadComponent {
         const secs = (seconds % 60).toString().padStart(2, '0');
         this.callDuration = `${mins}:${secs}`;
       }, 1000);
+    }
+
+    closeModal() {
+      this.isCallStatus = false;
     }
 }
