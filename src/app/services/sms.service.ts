@@ -20,7 +20,7 @@ export class SmsService {
       webhook_url:  webhook_url,//'https://mysite.com/7420/updates',
       webhook_failover_url: null, //'https://mysite.com/7420/backup/updates',
       use_profile_webhooks: true,
-      type: "MMS",
+      type: "SMS",
       subject: "From GitaiT",
       media_urls :[],
     };
