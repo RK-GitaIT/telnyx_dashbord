@@ -1,63 +1,56 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketService {
   private socket: WebSocket | null = null;
-  private reconnectAttempts = 0;
-  private maxReconnectAttempts = 5;
-  public message$ = new BehaviorSubject<any>(null);
+  private messageSubject = new Subject<any>();
 
-  constructor() {}
+  // Expose an observable to subscribe for incoming WebSocket messages
+  get message$(): Observable<any> {
+    return this.messageSubject.asObservable();
+  }
 
+  // Connect to the WebSocket using the provided URL
   connect(url: string): void {
-    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-      console.log('🔌 WebSocket already connected.');
-      return;
+    // If already connected, disconnect first
+    if (this.socket) {
+      this.disconnect();
     }
 
-    console.log(`🌐 Connecting to WebSocket: ${url}`);
+    console.log(`Connecting to WebSocket: ${url}`);
     this.socket = new WebSocket(url);
-    this.socket.onopen = this.onOpen.bind(this);
-    this.socket.onclose = this.onClose.bind(this, url);
-    this.socket.onerror = this.onError.bind(this);
-    this.socket.onmessage = this.onMessage.bind(this);
+
+    this.socket.onopen = () => {
+      console.log('WebSocket connected.');
+    };
+
+    this.socket.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        this.messageSubject.next(data);
+      } catch (error) {
+        console.error('Error parsing WebSocket message:', error);
+      }
+    };
+
+    this.socket.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    this.socket.onclose = () => {
+      console.log('WebSocket disconnected.');
+      this.socket = null;
+    };
   }
 
-  private onOpen(): void {
-    console.log('✅ WebSocket Connected');
-    this.reconnectAttempts = 0;
-  }
-
-  private onClose(url: string): void {
-    console.log('⚠️ WebSocket Closed');
-    if (this.reconnectAttempts < this.maxReconnectAttempts) {
-      this.reconnectAttempts++;
-      console.log(`🔄 Reconnecting (${this.reconnectAttempts}/${this.maxReconnectAttempts})...`);
-      setTimeout(() => this.connect(url), 2000);
-    } else {
-      console.log('❌ Max reconnect attempts reached.');
-    }
-  }
-
-  private onError(event: Event): void {
-    console.error('🚨 WebSocket Error:', event);
-  }
-
-  private onMessage(event: MessageEvent): void {
-    const message = JSON.parse(event.data);
-    console.log('📩 Message received:', message);
-    this.message$.next(message);
-  }
-
-  send(message: any): void {
-    if (this.socket?.readyState === WebSocket.OPEN) {
-      this.socket.send(JSON.stringify(message));
-      console.log('📤 Message sent:', message);
-    } else {
-      console.warn('⚡ WebSocket not open. Message not sent.');
+  // Disconnect the WebSocket
+  disconnect(): void {
+    if (this.socket) {
+      this.socket.close();
+      this.socket = null;
     }
   }
 }

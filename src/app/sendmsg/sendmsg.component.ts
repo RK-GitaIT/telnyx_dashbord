@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./sendmsg.component.css']
 })
 export class SendmsgComponent implements OnInit {
-  to: string = '';
+  to: string = '+';
   message: string = '';
   from: string = '';
   profiles: any[] = [];
@@ -83,6 +83,13 @@ export class SendmsgComponent implements OnInit {
     toast.textContent = message;
     document.body.appendChild(toast);
     setTimeout(() => document.body.removeChild(toast), 3000);
+  }
+
+  validateKey(event: KeyboardEvent) {
+    const allowedChars = /^[\d\+]+$/;
+    if (!allowedChars.test(event.key)) {
+      event.preventDefault();
+    }
   }
 
   async sendMessage() {

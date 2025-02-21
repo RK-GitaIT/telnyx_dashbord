@@ -3,8 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TelnyxService } from '../services/telnyx/telnyx.service';
 import { ProfileService } from '../services/profile.service';
-import { CalltelnyxService } from '../services/telnyx/calltelnyx.service';
-import { environment } from '../../config';
 import { CallService } from '../services/call.service';
 
 @Component({
@@ -14,16 +12,13 @@ import { CallService } from '../services/call.service';
   styleUrls: ['./ivrcall.component.css']
 })
 export class IvrcallComponent implements OnInit {
-  to: string = '';
+  to: string = '+';
   message: string = '';
   from: string = '';
   profiles: any[] = [];
   phoneNumbers: any[] = [];
   balance: number = 0;
   currency: string = 'USD';
-  callStatus: string = 'idle'; 
-  calldiscountstatus: any[] = ['hangup','destroy'];
-  log = "";
   
   selectedProfile = {
     id: '',
@@ -33,26 +28,42 @@ export class IvrcallComponent implements OnInit {
     password: '',
   };
 
-  constructor(private telnyxservice: TelnyxService,
+  constructor(
+    private telnyxservice: TelnyxService,
     private profileService: ProfileService,
-     private callService: CallService) {}
+    private callService: CallService
+  ) {}
 
   async ngOnInit() {
-    // Load profiles from backend
     this.callService.call_control_applicationsProfiles().subscribe(
-      (data:any) => {
+      (data: any) => {
         this.profiles = data.data;
-        console.log(this.profiles, "call controll profiles");
-        this.selectedProfile.id = this.profiles[0].id;
-        this.onProfileChange();
-        console.log('Messaging Profiles:', this.profiles);
+        console.log('Call control profiles:', this.profiles);
+        if (this.profiles.length > 0) {
+          this.selectedProfile.id = this.profiles[0].id;
+          this.onProfileChange();
+        }
       },
-      (error:any) => {
+      (error: any) => {
         console.error('Error fetching profiles', error);
       }
     );
-  }
 
+    // Subscribe to call status notifications
+    this.telnyxservice.callStatus$.subscribe(status => {
+      // Show toast for info, success, "Call Ended" or "TTS Not Sent"
+      if (status.status && (
+          status.type === 'info' ||
+          status.type === 'success' ||
+          status.status === 'Call Ended' ||
+          status.status === 'TTS Not Sent' ||
+          status.status === 'Call Failed'
+        )) {
+        this.showToast(status.status, status.type);
+      }
+      console.log("Call Status:", status);
+    });
+  }
 
   fetchBalance() {
     this.profileService.getProfileBalance().subscribe(
@@ -64,38 +75,22 @@ export class IvrcallComponent implements OnInit {
     );
   }
 
-     async onProfileChange() {
-        try {
-          console.log(this.selectedProfile);
-          if (!this.selectedProfile.id) return;
-      
-          console.log(this.selectedProfile);
-          const selected = this.profiles.find(
-            (profile) => profile.id === this.selectedProfile.id
-          );
-      
-          if (selected) {
-            this.selectedProfile.profileName = selected.connection_name;
-            this.selectedProfile.username = selected.user_name;
-            this.selectedProfile.password = selected.password;
-      
-            console.log(this.selectedProfile);
-      
-            // ✅ Correct usage of async/await
-            const response = await this.callService.getProfilesAssociatedPhonenumbers(this.selectedProfile.id).toPromise();
-            this.phoneNumbers = response?.data || [];
-      
-            if (this.phoneNumbers.length > 0) {
-              this.from = this.phoneNumbers[0].phone_number;
-              console.log("Initial call");
-            } else {
-              this.from = '';
-            }
-          }
-        } catch (error) {
-          console.error('Error fetching associated phone numbers', error);
-        }
+  async onProfileChange() {
+    try {
+      if (!this.selectedProfile.id) return;
+      const selected = this.profiles.find(profile => profile.id === this.selectedProfile.id);
+      if (selected) {
+        this.selectedProfile.profileName = selected.connection_name;
+        this.selectedProfile.username = selected.user_name;
+        this.selectedProfile.password = selected.password;
+        const response = await this.callService.getProfilesAssociatedPhonenumbers(this.selectedProfile.id).toPromise();
+        this.phoneNumbers = response?.data || [];
+        this.from = this.phoneNumbers.length > 0 ? this.phoneNumbers[0].phone_number : '';
       }
+    } catch (error) {
+      console.error('Error fetching associated phone numbers', error);
+    }
+  }
 
   showToast(message: string, type: 'info' | 'success' | 'error') {
     const toast = document.createElement('div');
@@ -118,18 +113,17 @@ export class IvrcallComponent implements OnInit {
     );
 
     if (confirmSend) {
-      this.showToast('📨 Sending voice message...', 'info');
+      this.showToast('Sending voice message...', 'info');
       try {
         await this.telnyxservice.makeCall(
           this.to,
           this.from,
-          this.selectedProfile.id,          
+          this.selectedProfile.id,
           this.message
         );
         this.fetchBalance();
       } catch (error) {
-        console.error('🚨 Error in sending voice message:', error);
-        this.showToast('❌ An unexpected error occurred while sending the message.', 'error');
+        console.error('Error sending voice message:', error);
       }
     }
   }

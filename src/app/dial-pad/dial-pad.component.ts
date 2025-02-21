@@ -39,7 +39,9 @@ export class DialPadComponent {
     private callbeepSound = new Audio('assets/callbeep.mp3');
   
     constructor(private calltelnyxService: CalltelnyxService,
-        private callService: CallService) {}
+        private callService: CallService) {
+          this.callbeepSound.loop = true;
+        }
   
     async ngOnInit() {
       // Load profiles from backend
@@ -58,10 +60,12 @@ export class DialPadComponent {
         this.callStatus = status;
        
         if(this.calldiscountstatus.find(a=>a == this.callStatus)){
+          this.pauseCallBeep();
           this.closeModal();
         }
 
         if(this.callStatus == 'active'){
+          this.pauseCallBeep();
           this.callbeepSound.pause();
           this.startCallTimer();
         }
@@ -142,6 +146,7 @@ export class DialPadComponent {
     call() {
       if (this.dialedNumber) {
         this.isCallStatus = true;
+        this.callbeepSound.currentTime = 0;
         this.callbeepSound.play();
         this.calltelnyxService.call(this.dialedNumber, this.from);
       }
@@ -156,6 +161,7 @@ export class DialPadComponent {
       this.beepSound.currentTime = 0;  // Restart sound
       this.callbeepSound.play();
       console.log('Call ended');
+      this.pauseCallBeep();
       this.closeModal();
     }
 
@@ -176,6 +182,12 @@ export class DialPadComponent {
     }
 
     closeModal() {
+      this.callbeepSound.play();
       this.isCallStatus = false;
+    }
+
+    pauseCallBeep() {
+      this.callbeepSound.pause();
+      this.callbeepSound.currentTime = 0;
     }
 }
