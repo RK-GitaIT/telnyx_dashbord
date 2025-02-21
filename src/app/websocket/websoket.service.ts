@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs/internal/BehaviorSubject";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,7 @@ export class WebsocketService {
       return;
     }
 
+    console.log(`Connecting to WebSocket: ${url}`);
     this.socket = new WebSocket(url);
     this.socket.onopen = this.onOpen.bind(this);
     this.socket.onclose = this.onClose.bind(this);
@@ -26,33 +27,33 @@ export class WebsocketService {
   }
 
   private onOpen(event: Event): void {
-    console.log('WebSocket Connected');
+    console.log('✅ WebSocket Connected');
     this.reconnectAttempts = 0;
   }
 
   private onClose(event: CloseEvent): void {
-    console.log('WebSocket Closed:', event);
+    console.log('⚠️ WebSocket Closed:', event);
     if (this.reconnectAttempts < this.maxReconnectAttempts) {
-      console.log('Attempting to reconnect...');
-      setTimeout(() => this.reconnect(), 2000); // Retry after 2 seconds
+      this.reconnectAttempts++;
+      console.log(`🔄 Reconnecting attempt ${this.reconnectAttempts}...`);
+      setTimeout(() => this.reconnect(), 2000);
     } else {
-      console.log('Max reconnect attempts reached.');
+      console.log('❌ Max reconnect attempts reached.');
     }
   }
 
   private onError(event: Event): void {
-    console.error('WebSocket Error:', event);
+    console.error('🚨 WebSocket Error:', event);
   }
 
   private onMessage(event: MessageEvent): void {
     const message = JSON.parse(event.data);
-    console.log('Message from server:', message);
+    console.log('📩 Message from server:', message);
     this.message$.next(message);
   }
 
   private reconnect(): void {
     if (this.socket?.readyState === WebSocket.CLOSED) {
-      this.reconnectAttempts++;
       this.connect('wss://telnyx-dashbord-gitait-dev.vercel.app/websocket');
     }
   }
@@ -61,7 +62,7 @@ export class WebsocketService {
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       this.socket.send(JSON.stringify(message));
     } else {
-      console.log('WebSocket is not open. Retry later.');
+      console.warn('⚡ WebSocket is not open. Retry later.');
     }
   }
 }
