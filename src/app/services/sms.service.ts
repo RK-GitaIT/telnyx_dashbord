@@ -25,6 +25,6 @@ export class SmsService {
       media_urls :[],
     };
 
-    return this.http.post(this.apiUrl, payload);
+    return this.http.post(this.apiUrl + '/messages', payload);
   }
 }
