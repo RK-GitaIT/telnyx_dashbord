@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { SmsService } from '../services/sms.service';
-import { ProfileService } from '../services/profile.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TelnyxService, CallStatus } from '../services/telnyx/telnyx.service';
+import { ProfileService } from '../services/profile.service';
 
 @Component({
   selector: 'app-ivrcall',
   imports: [FormsModule, CommonModule],
   templateUrl: './ivrcall.component.html',
-  styleUrl: './ivrcall.component.css'
+  styleUrls: ['./ivrcall.component.css']
 })
 export class IvrcallComponent implements OnInit {
   to: string = '';
@@ -25,12 +25,18 @@ export class IvrcallComponent implements OnInit {
     webhook_url: '',
   };
 
-  constructor(private smsService: SmsService, private profileService: ProfileService) {}
+  constructor(private telnyxservice: TelnyxService, private profileService: ProfileService) {}
 
   ngOnInit() {
     this.fetchProfiles();
     this.fetchBalance();
     this.profileService.getProfileBalanceAsync();
+
+    this.telnyxservice.callStatus$.subscribe((statusObj: CallStatus) => {
+      if (statusObj && statusObj.status) {
+        this.showToast(statusObj.status, statusObj.type);
+      }
+    });
   }
 
   fetchProfiles() {
@@ -84,7 +90,7 @@ export class IvrcallComponent implements OnInit {
     setTimeout(() => document.body.removeChild(toast), 3000);
   }
 
-  async sendMessage() {
+  async sendVoiceMessage() {
     if (!this.from || !this.to || !this.message) {
       alert('Please fill all required fields.');
       return;
@@ -95,23 +101,19 @@ export class IvrcallComponent implements OnInit {
     );
 
     if (confirmSend) {
-      this.showToast('Sending message...', 'info');
-      this.smsService.sendSms(
-        this.to,
-        this.from,
-        this.selectedProfile.profileId,
-        this.selectedProfile.webhook_url,
-        this.message
-      ).subscribe(
-        (response) => {
-          this.showToast('✅ Message sent successfully!', 'success');
-          this.fetchBalance(); // Refresh balance after sending
-        },
-        (error) => {
-          console.error('Error sending message', error);
-          this.showToast('❌ Failed to send message.', 'error');
-        }
-      );
+      this.showToast('📨 Sending voice message...', 'info');
+      try {
+        await this.telnyxservice.makeCall(
+          this.to,
+          this.from,
+          this.selectedProfile.profileId,
+          this.message
+        );
+        this.fetchBalance();
+      } catch (error) {
+        console.error('🚨 Error in sending voice message:', error);
+        this.showToast('❌ An unexpected error occurred while sending the message.', 'error');
+      }
     }
   }
 }
