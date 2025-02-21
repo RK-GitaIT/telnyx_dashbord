@@ -35,7 +35,7 @@ export class TelnyxService {
       const profileDetails = await this.callService.getProfilesAssociatedPhonenumbers(connectionId).toPromise();
       if (profileDetails.data == null) throw new Error('Invalid profile details.');
 
-      const websocketUrl = "wss://telnyx-dashbord-gitait-dev.vercel.app/websocket";
+      const websocketUrl = "wss://telnyx-backend-94wdxgbjt-ram-gitaits-projects.vercel.app/api/webhook";
       this.websocketService.connect(websocketUrl);
 
       const payload = {

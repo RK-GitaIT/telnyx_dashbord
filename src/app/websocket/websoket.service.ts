@@ -54,7 +54,7 @@ export class WebsocketService {
 
   private reconnect(): void {
     if (this.socket?.readyState === WebSocket.CLOSED) {
-      this.connect('wss://telnyx-dashbord-gitait-dev.vercel.app/websocket');
+      this.connect('wss://telnyx-backend-94wdxgbjt-ram-gitaits-projects.vercel.app/api/webhook');
     }
   }
 
