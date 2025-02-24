@@ -19,6 +19,9 @@ export class IvrcallComponent implements OnInit {
   phoneNumbers: any[] = [];
   balance: number = 0;
   currency: string = 'USD';
+  isCallStatus: boolean = false;
+  private timerInterval: any;
+  callDuration: string = '00:00';
   
   selectedProfile = {
     id: '',
@@ -27,6 +30,9 @@ export class IvrcallComponent implements OnInit {
     username: '',
     password: '',
   };
+
+  private callbeepSound = new Audio('assets/callbeep.mp3');
+  private beepSound = new Audio('assets/beep.wav');
 
   constructor(
     private telnyxservice: TelnyxService,
@@ -49,20 +55,22 @@ export class IvrcallComponent implements OnInit {
       }
     );
 
-    // Subscribe to call status notifications
     this.telnyxservice.callStatus$.subscribe(status => {
-      // Show toast for info, success, "Call Ended" or "TTS Not Sent"
-      if (status.status && (
-          status.type === 'info' ||
-          status.type === 'success' ||
-          status.status === 'Call Ended' ||
-          status.status === 'TTS Not Sent' ||
-          status.status === 'Call Failed'
-        )) {
+      if (status.status === 'Call Answered' && status.type ===  "success") {
+        this.isCallStatus = true;
+        this.startCallTimer();
         this.showToast(status.status, status.type);
       }
+    
+      if (status.status && ['Hanging Up','Call Failed', 'TTS Not Sent', 'Call Ended'].includes(status.status)) {
+        this.isCallStatus = false;
+        this.hangup();
+        this.showToast(status.status, status.type);
+      }
+    
       console.log("Call Status:", status);
     });
+    
   }
 
   fetchBalance() {
@@ -109,6 +117,7 @@ export class IvrcallComponent implements OnInit {
     }
     
       try {
+        this.isCallStatus = true;
         await this.telnyxservice.makeCall(
           this.to,
           this.from,
@@ -117,6 +126,8 @@ export class IvrcallComponent implements OnInit {
         );
         this.fetchBalance();
       } catch (error) {
+        this.hangup();
+        this.showToast('Error sending voice message', 'error');
         console.error('Error sending voice message:', error);
       }
   }
@@ -126,5 +137,31 @@ export class IvrcallComponent implements OnInit {
     if (!allowedChars.test(event.key)) {
       event.preventDefault();
     }
+  }
+
+  closeModal() {
+    this.callbeepSound.play();
+    this.isCallStatus = false;
+  }
+
+  startCallTimer() {
+    let seconds = 0;
+    clearInterval(this.timerInterval);
+    this.timerInterval = setInterval(() => {
+      seconds++;
+      const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+      const secs = (seconds % 60).toString().padStart(2, '0');
+      this.callDuration = `${mins}:${secs}`;
+    }, 1000);
+  }
+
+  hangup() {
+    this.isCallStatus = false;
+    clearInterval(this.timerInterval);
+    this.callDuration = '00:00';
+    this.beepSound.currentTime = 0;  // Restart sound
+    this.callbeepSound.play();
+    console.log('Call ended');
+    this.closeModal();
   }
 }

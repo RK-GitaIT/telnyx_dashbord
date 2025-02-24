@@ -96,6 +96,11 @@ export class TelnyxService {
       this.callStatus$.next({ status: 'Call Answered', type: 'success' });
       this.playTTS(res.data.payload.call_control_id, this.message);
     }
+
+    if (res?.data && res.data.payload && res.data.event_type === 'call.speak.ended') {
+      this.callStatus$.next({ status: 'Call Ended', type: 'success' });
+      this.hangUpCall(res.data.payload.call_control_id);
+    }
   }
 
   async playTTS(callControlId: string, message: string) {
@@ -112,7 +117,6 @@ export class TelnyxService {
       console.log("TTS Playback Started:", response);
       // TTS played successfully – show success toast and then hang up
       this.callStatus$.next({ status: 'TTS Playback Started', type: 'success' });
-      this.hangUpCall(callControlId);
     } catch (error) {
       console.error("Error playing TTS:", error);
       // On error, update status to "TTS Not Sent" so that an error toast is shown
