@@ -1,0 +1,90 @@
+<div class="min-h-screen bg-gray-50 p-4 flex flex-col">
+    <h1 class="text-center text-2xl font-bold mb-6">QR Code Generator</h1>
+  
+    <div class="flex flex-col md:flex-row justify-center gap-6 flex-1">
+      <!-- Left Form Panel -->
+      <div class="bg-white shadow rounded-lg p-4 w-full max-w-md mx-auto">
+        <form class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Website URL</label>
+            <input [(ngModel)]="url" name="url" placeholder="Enter URL"
+                   class="mt-1 block w-full border rounded p-2 text-sm" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Business Name</label>
+            <input [(ngModel)]="businessName" name="businessName" placeholder="Enter Business Name"
+                   class="mt-1 block w-full border rounded p-2 text-sm" />
+          </div>
+          <div class="flex gap-2">
+            <div class="w-1/2">
+              <label class="block text-sm font-medium text-gray-700">Dot Color</label>
+              <input type="color" [(ngModel)]="dotColor" name="dotColor"
+                     class="mt-1 w-full h-10 border rounded" />
+            </div>
+            <div class="w-1/2">
+              <label class="block text-sm font-medium text-gray-700">Background Color</label>
+              <input type="color" [(ngModel)]="bgColor" name="bgColor"
+                     class="mt-1 w-full h-10 border rounded" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Dot Shape</label>
+            <select [(ngModel)]="shape" name="shape"
+                    class="mt-1 block w-full border rounded p-2 text-sm">
+              <option value="rounded">Rounded</option>
+              <option value="square">Square</option>
+              <option value="dots">Dots</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">QR Code Size</label>
+            <select [(ngModel)]="size" name="size"
+                    class="mt-1 block w-full border rounded p-2 text-sm">
+              <option [value]="200">Small (200x200)</option>
+              <option [value]="300">Medium (300x300)</option>
+              <option [value]="400">Large (400x400)</option>
+              <option [value]="500">Extra Large (500x500)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Upload Logo (optional)</label>
+            <input type="file" (change)="handleImageUpload($event)" accept="image/*"
+                   class="mt-1 block w-full border rounded p-2 text-sm" />
+          </div>
+          <div class="flex gap-2">
+            <button type="button" (click)="generateQR()"
+                    class="flex-1 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded text-sm">
+              Generate QR
+            </button>
+            <button type="button" (click)="clearAll()"
+                    class="flex-1 bg-red-600 hover:bg-red-700 text-white p-2 rounded text-sm">
+              Clear
+            </button>
+          </div>
+        </form>
+      </div>
+  
+      <!-- Right Preview Panel -->
+      <div class="bg-white shadow rounded-lg p-4 w-full max-w-md mx-auto flex flex-col items-center">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">QR Code Preview</h2>
+        <!-- Always rendered container for the QR code -->
+        <div #qrCodeCanvas class="mb-4"></div>
+  
+        <!-- Download controls appear only when QR is generated -->
+        <div *ngIf="isQrGenerated" class="w-full">
+          <label class="block text-sm font-medium text-gray-700">Download Format</label>
+          <select [(ngModel)]="downloadFormat" name="downloadFormat"
+                  class="mt-1 block w-full border rounded p-2 text-sm">
+            <option value="png">PNG</option>
+            <option value="svg">SVG</option>
+            <option value="jpg">JPG</option>
+          </select>
+          <button type="button" (click)="download()"
+                  class="w-full bg-green-600 hover:bg-green-700 text-white p-2 rounded mt-4 text-sm">
+            Download QR
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

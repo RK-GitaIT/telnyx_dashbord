@@ -5,6 +5,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { SendmsgComponent } from './sendmsg/sendmsg.component';
 import { DialPadComponent } from './dial-pad/dial-pad.component';
 import { IvrcallComponent } from './ivrcall/ivrcall.component';
+import { QrcodegeneratorComponent } from './component/qrcodegenerator/qrcodegenerator.component';
 
 export const routes: Routes = [
   { path: 'messages', component: MessagesComponent },
@@ -13,5 +14,6 @@ export const routes: Routes = [
   { path: 'ivr', component: IvrcallComponent },
   { path: 'contacts', component: ContactsComponent },
   { path: 'settings', component: SettingsComponent },
+  {path: 'qrgenerator', component: QrcodegeneratorComponent},
   { path: '', redirectTo: '/messages', pathMatch: 'full' } 
 ];

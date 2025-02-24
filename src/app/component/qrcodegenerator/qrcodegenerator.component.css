@@ -1,0 +1,51 @@
+@media (max-width: 640px) {
+    .w-full.max-w-lg {
+      width: 100%;
+      padding: 1rem;
+    }
+  
+    .text-3xl {
+      font-size: 1.5rem;
+    }
+  
+    input, select, button {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (min-width: 641px) {
+    .w-full.max-w-lg {
+      width: 50%;
+    }
+  }  
+  
+  /* Added smooth transitions */
+  button:hover {
+    transition: background-color 0.3s ease;
+  }
+  
+  input, select, button {
+    outline: none;
+    transition: all 0.3s ease;
+  }  
+  
+  /* Responsive spacing */
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  /* Consistent rounded design */
+  .rounded-lg, .rounded-2xl {
+    border-radius: 1rem;
+  }  
+  
+  /* Custom shadow for depth */
+  .shadow {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }  
+  
+  /* Background smooth transition */
+  .bg-white:hover {
+    background-color: #f9fafb;
+  }
+  
