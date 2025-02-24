@@ -98,12 +98,7 @@ export class SendmsgComponent implements OnInit {
       return;
     }
 
-    const confirmSend = confirm(
-      `Note: SMS will only be sent to USA numbers.\nCost: $0.004 per SMS.\nCurrent Balance: ${this.balance} ${this.currency}\n\nDo you want to proceed?`
-    );
-
-    if (confirmSend) {
-      this.showToast('Sending message...', 'info');
+    this.showToast('Sending message...', 'info');
       this.smsService.sendSms(
         this.to,
         this.from,
@@ -120,6 +115,5 @@ export class SendmsgComponent implements OnInit {
           this.showToast('❌ Failed to send message.', 'error');
         }
       );
-    }
   }
 }

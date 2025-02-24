@@ -15,8 +15,8 @@ export interface CallStatus {
 })
 export class TelnyxService {
   // Update these URLs with your deployed server endpoint
-  private websocketUrl = 'https://9bccfa7d-d274-4959-a8d9-3f291234fb15-00-2spvmgf4sg5r2.sisko.replit.dev/api/webhook';
-  private webws = 'ws://9bccfa7d-d274-4959-a8d9-3f291234fb15-00-2spvmgf4sg5r2.sisko.replit.dev/api/webhook';
+  private websocketUrl = 'https://gitait.com/telnyx/api/webhook';
+  private webws = 'wss://gitait.com/telnyx/ws';
   private backendApi = environment.apiUrl;
   
   message: string = '';

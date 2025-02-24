@@ -107,13 +107,7 @@ export class IvrcallComponent implements OnInit {
       alert('Please fill all required fields.');
       return;
     }
-
-    const confirmSend = confirm(
-      `Note: SMS will only be sent to USA numbers.\nCost: $0.004 per SMS.\nCurrent Balance: ${this.balance} ${this.currency}\n\nDo you want to proceed?`
-    );
-
-    if (confirmSend) {
-      this.showToast('Sending voice message...', 'info');
+    
       try {
         await this.telnyxservice.makeCall(
           this.to,
@@ -125,6 +119,12 @@ export class IvrcallComponent implements OnInit {
       } catch (error) {
         console.error('Error sending voice message:', error);
       }
+  }
+
+  validateKey(event: KeyboardEvent) {
+    const allowedChars = /^[\d\+]+$/;
+    if (!allowedChars.test(event.key)) {
+      event.preventDefault();
     }
   }
 }
