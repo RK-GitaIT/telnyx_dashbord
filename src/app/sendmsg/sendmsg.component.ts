@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { SmsService } from '../services/sms.service';
 import { ProfileService } from '../services/profile.service';
 import { CommonModule } from '@angular/common';
+import { WebsocketService } from '../websocket/websoket.service';
 
 @Component({
   selector: 'app-sendmsg',
@@ -12,6 +13,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./sendmsg.component.css']
 })
 export class SendmsgComponent implements OnInit {
+  private websocketUrl = 'https://gitait.com/telnyx/api/webhook';
+  private webws = 'wss://gitait.com/telnyx/ws';
   to: string = '+';
   message: string = '';
   from: string = '';
@@ -26,7 +29,9 @@ export class SendmsgComponent implements OnInit {
     webhook_url: '',
   };
 
-  constructor(private smsService: SmsService, private profileService: ProfileService) {}
+  constructor(private smsService: SmsService, private profileService: ProfileService, private websocketService: WebsocketService) {
+    this.websocketService.message$.subscribe((res: any) => this.handleWebSocketMessage(res));
+  }
 
   ngOnInit() {
     this.fetchProfiles();
@@ -98,16 +103,18 @@ export class SendmsgComponent implements OnInit {
       return;
     }
 
+    this.websocketService.connect(this.webws);
+
     this.showToast('Sending message...', 'info');
       this.smsService.sendSms(
         this.to,
         this.from,
         this.selectedProfile.profileId,
-        this.selectedProfile.webhook_url,
+        this.websocketUrl,
         this.message
       ).subscribe(
         (response) => {
-          this.showToast('✅ Message sent successfully!', 'success');
+         // this.showToast('✅ Message sent successfully!', 'success');
           this.fetchBalance(); // Refresh balance after sending
         },
         (error) => {
@@ -116,4 +123,25 @@ export class SendmsgComponent implements OnInit {
         }
       );
   }
+
+  private handleWebSocketMessage(res: any) {
+    console.log('WebSocket Message:', res);
+    
+    if (res?.data && res.data.payload) {
+      switch (res.data.event_type) {
+        case 'message.send':
+          this.showToast("Sending SMS...", "info");
+          break;
+        case 'message.delivered':
+          this.showToast("SMS sent successfully.", "success");
+          break;
+        case 'message.failed':
+          this.showToast("Failed to send SMS.", "error");
+          break;
+        default:
+          break;
+      }
+    }
+  }
+  
 }
