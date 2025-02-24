@@ -100,14 +100,16 @@ export class IvrcallComponent implements OnInit {
     }
   }
 
-  showToast(message: string, type: 'info' | 'success' | 'error') {
-    const toast = document.createElement('div');
-    toast.className = `fixed bottom-4 right-4 p-3 rounded-lg shadow-lg text-white ${
-      type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-blue-500'
-    }`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    setTimeout(() => document.body.removeChild(toast), 3000);
+  showToast(message: string, type: 'info' | 'success' | 'error' | '') {
+    if(type !== ''){
+      const toast = document.createElement('div');
+      toast.className = `fixed bottom-4 right-4 p-3 rounded-lg shadow-lg text-white ${
+        type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+      }`;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => document.body.removeChild(toast), 3000);
+    }
   }
 
   async sendVoiceMessage() {
