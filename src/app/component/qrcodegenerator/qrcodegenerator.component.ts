@@ -74,7 +74,7 @@ export class QrcodegeneratorComponent implements AfterViewInit {
     // If user has a Business Name but no file uploaded
     else if (this.businessName) {
       // Use a placeholder image that displays the business name
-      const placeholder = `https://via.placeholder.com/${this.size}?text=${encodeURIComponent(this.businessName)}`;
+      const placeholder = `https://dummyimage.com/${this.size}x${this.size}/ffffff/000000.jpg&text=${encodeURIComponent(this.businessName)}`;
       this.updateQrCode(placeholder);
     } else {
       // No image or business name => just the QR code data

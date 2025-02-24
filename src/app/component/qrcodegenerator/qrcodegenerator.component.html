@@ -51,13 +51,14 @@
             <input type="file" (change)="handleImageUpload($event)" accept="image/*"
                    class="mt-1 block w-full border rounded p-2 text-sm" />
           </div>
-          <div class="flex gap-2">
-            <button type="button" (click)="generateQR()"
-                    class="flex-1 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded text-sm">
+          <div class="flex gap-3">
+            <button style="background-color: #1e3a8a;"
+                    type="button" (click)="generateQR()"
+                    class="flex-1 hover:bg-gradient-to-r from-blue-500 to-blue-700 shadow-md hover:shadow-lg transform hover:scale-105 transition-all text-white p-3 rounded-2xl text-base font-semibold">
               Generate QR
             </button>
             <button type="button" (click)="clearAll()"
-                    class="flex-1 bg-red-600 hover:bg-red-700 text-white p-2 rounded text-sm">
+                    class="flex-1 bg-red-600 hover:bg-red-700 shadow-md hover:shadow-lg transform hover:scale-105 transition-all text-white p-3 rounded-2xl text-base font-semibold">
               Clear
             </button>
           </div>
@@ -80,9 +81,8 @@
             <option value="jpg">JPG</option>
           </select>
           <button type="button" (click)="download()"
-                  class="w-full bg-green-600 hover:bg-green-700 text-white p-2 rounded mt-4 text-sm">
-            Download QR
-          </button>
+          class="w-full bg-green-600 hover:bg-green-700 shadow-md hover:shadow-lg transform hover:scale-105 transition-all text-white p-3 rounded-2xl mt-4 text-base font-semibold"> Download QR
+        </button>
         </div>
       </div>
     </div>
