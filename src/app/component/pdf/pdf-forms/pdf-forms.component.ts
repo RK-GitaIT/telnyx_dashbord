@@ -23,27 +23,12 @@ export class PdfFormsComponent {
 
   constructor(private pdfService: PdfService) {}
 
-  handlePreviewPdf(): void {
-    if (this.childComponent) {
-      this.childComponent.previewPdf();
-    } else {
-      console.error('No form loaded for preview.');
-    }
-  }
 
   handleDownloadPdf(): void {
     if (this.childComponent) {
       this.childComponent.downloadPdf();
     } else {
       console.error('No form loaded for download.');
-    }
-  }
-
-  handlePdfMapping(): void {
-    if (this.childComponent) {
-      this.childComponent.pdfMapping();
-    } else {
-      console.error('No form loaded for mapping.');
     }
   }
 

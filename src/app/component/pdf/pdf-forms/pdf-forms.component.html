@@ -7,13 +7,11 @@
   </div>
 
   <div class="actions" *ngIf="selectedFormType">
-    <button (click)="handlePreviewPdf()">📄 Preview PDF</button>
     <button (click)="handleDownloadPdf()">⬇️ Download PDF</button>
-    <button (click)="handlePdfMapping()">🗂️ PDF Mapping</button>
     <button (click)="submitChildForm()">✅ Submit</button>
     <button (click)="handleCancel()">🚫 Cancel</button>
   </div>
-  
+
   <hr/>
 
   <ng-container [ngSwitch]="selectedFormType">
