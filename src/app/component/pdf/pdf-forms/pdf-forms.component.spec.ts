@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WebRTCCallComponent } from './web-rtccall.component';
+import { PdfFormsComponent } from './pdf-forms.component';
 
-describe('WebRTCCallComponent', () => {
-  let component: WebRTCCallComponent;
-  let fixture: ComponentFixture<WebRTCCallComponent>;
+describe('PdfFormsComponent', () => {
+  let component: PdfFormsComponent;
+  let fixture: ComponentFixture<PdfFormsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WebRTCCallComponent]
+      imports: [PdfFormsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(WebRTCCallComponent);
+    fixture = TestBed.createComponent(PdfFormsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { SmsService } from '../services/sms.service';
 import { ProfileService } from '../services/profile.service';
 import { CommonModule } from '@angular/common';
-import { WebsocketService } from '../websocket/websoket.service';
+import { WebsocketService } from '../services/websocket/websoket.service';
 
 @Component({
   selector: 'app-sendmsg',

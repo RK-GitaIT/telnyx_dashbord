@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PhoneComponent } from './phone.component';
+import { MpaFormComponent } from './mpa-form.component';
 
-describe('PhoneComponent', () => {
-  let component: PhoneComponent;
-  let fixture: ComponentFixture<PhoneComponent>;
+describe('MpaFormComponent', () => {
+  let component: MpaFormComponent;
+  let fixture: ComponentFixture<MpaFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PhoneComponent]
+      imports: [MpaFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PhoneComponent);
+    fixture = TestBed.createComponent(MpaFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

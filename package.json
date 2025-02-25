@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^19.1.0",
     "@angular/router": "^19.1.0",
     "@telnyx/webrtc": "^2.22.5",
+    "pdf-lib": "^1.17.1",
     "qr-code-styling": "^1.9.1",
     "rxjs": "~7.8.0",
     "telnyx": "^2.0.0",

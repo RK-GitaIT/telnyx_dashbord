@@ -1,0 +1,29 @@
+<div class="mapping-container">
+    <h2>PDF Field Mapping</h2>
+    <!-- Wrap inputs inside a formGroup to fix the NG01050 error -->
+    <form [formGroup]="mappingForm">
+      <div class="form-group">
+        <label for="labelName">
+          Label Name 
+          <small>(PDF Field: {{ fieldMapping['labelName'] }})</small>
+        </label>
+        <input id="labelName" type="text" formControlName="labelName" placeholder="Enter label name" />
+      </div>
+      <div class="form-group">
+        <label for="company">
+          Company 
+          <small>(PDF Field: {{ fieldMapping['Company'] }})</small>
+        </label>
+        <input id="company" type="text" formControlName="company" placeholder="Enter company name" />
+      </div>
+      <!-- Add additional form fields manually as needed -->
+    </form>
+  </div>
+  
+  <div class="actions">
+    <button (click)="previewPdf()">Preview PDF</button>
+    <button (click)="downloadPdf()">Download PDF</button>
+    <button (click)="submitForm()">Submit Mapping</button>
+    <button (click)="resetForm()">Reset</button>
+  </div>
+  

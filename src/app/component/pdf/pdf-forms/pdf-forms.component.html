@@ -1,0 +1,38 @@
+<div class="p-5 space-y-4">
+    <select [(ngModel)]="selectedFormType" class="border p-2 w-full">
+      <option value="">Select Form</option>
+      <option value="mpa-form">Medical Power Of Attorney</option>
+      <option value="hipaa-form">HIPAA Release Form</option>
+    </select>
+  </div>
+
+  <div class="actions" *ngIf="selectedFormType">
+    <button (click)="handlePreviewPdf()">📄 Preview PDF</button>
+    <button (click)="handleDownloadPdf()">⬇️ Download PDF</button>
+    <button (click)="handlePdfMapping()">🗂️ PDF Mapping</button>
+    <button (click)="submitChildForm()">✅ Submit</button>
+    <button (click)="handleCancel()">🚫 Cancel</button>
+  </div>
+  
+  <hr/>
+
+  <ng-container [ngSwitch]="selectedFormType">
+    <app-mpa-form
+      *ngSwitchCase="'mpa-form'"
+      #childComponent
+      (formSubmitted)="handleFormSubmit($event)"
+      (resetTriggered)="handleResetTriggered()">
+    </app-mpa-form>
+
+    <app-hippa-form
+      *ngSwitchCase="'hipaa-form'"
+      #childComponent
+      (formSubmitted)="handleFormSubmit($event)"
+      (resetTriggered)="handleResetTriggered()">
+    </app-hippa-form>
+  </ng-container>
+
+  <div *ngIf="isFormSubmitted" class="success">
+    <h3>🎉 Submission Successful!</h3>
+    <pre>{{ formData | json }}</pre>
+  </div>

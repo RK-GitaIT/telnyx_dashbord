@@ -62,6 +62,9 @@ export class DialPadComponent {
         if(this.calldiscountstatus.find(a=>a == this.callStatus)){
           this.pauseCallBeep();
           this.closeModal();
+          this.pauseCallBeep();
+          this.callbeepSound.pause();
+          this.callDuration = "00:00";
         }
 
         if(this.callStatus == 'active'){
@@ -69,7 +72,6 @@ export class DialPadComponent {
           this.callbeepSound.pause();
           this.startCallTimer();
         }
-
         console.log("Status Initial", this.callStatus);
       });
     }
@@ -153,13 +155,13 @@ export class DialPadComponent {
     }
   
     hangup() {
+      this.callbeepSound.play();
       this.isCallStatus = false;
       this.calltelnyxService.hangup();
       clearInterval(this.timerInterval);
       this.callDuration = '00:00';
       this.callStatus = 'idle';
       this.beepSound.currentTime = 0;  // Restart sound
-      this.callbeepSound.play();
       console.log('Call ended');
       this.pauseCallBeep();
       this.closeModal();

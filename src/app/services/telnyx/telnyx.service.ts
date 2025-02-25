@@ -3,7 +3,7 @@ import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { CallService } from '../call.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../config';
-import { WebsocketService } from '../../websocket/websoket.service';
+import { WebsocketService } from '../websocket/websoket.service';
 
 export interface CallStatus {
   status: string;
