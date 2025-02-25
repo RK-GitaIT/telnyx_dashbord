@@ -1,492 +1,372 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()" class="w-full max-w-6xl mx-auto p-4">
-    <!-- Use a grid layout for a full‑width, two‑column design -->
-    <div class="grid grid-cols-2 gap-6">
-    <div>
-      <div>
-        <label for="field41" class="block text-sm font-medium text-gray-700" title="Enter your name">
-          Name <span class="text-red-500">*</span>
-        </label>
-        <input id="field41" formControlName="field41" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Name" />
-        <div *ngIf="form.get('field41')?.touched && form.get('field41')?.invalid"
-          class="text-red-500 text-xs">Name is required</div>
-      </div>
-      <div>
-        <label for="field42" class="block text-sm font-medium text-gray-700" title="Enter nominee name">
-          Nominee <span class="text-red-500">*</span>
-        </label>
-        <input id="field42" formControlName="field42" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Nominee" />
-        <div *ngIf="form.get('field42')?.touched && form.get('field42')?.invalid"
-          class="text-red-500 text-xs">Nominee is required</div>
-      </div>
-      <div>
-        <label for="field43" class="block text-sm font-medium text-gray-700" title="Enter nominee address">
-          Nominee Address <span class="text-red-500">*</span>
-        </label>
-        <input id="field43" formControlName="field43" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Nominee Address" />
-        <div *ngIf="form.get('field43')?.touched && form.get('field43')?.invalid"
-          class="text-red-500 text-xs">Nominee Address is required</div>
-      </div>
-      <div>
-        <label for="field44" class="block text-sm font-medium text-gray-700" title="Enter nominee phone number">
-          Nominee Phone <span class="text-red-500">*</span>
-        </label>
-        <input id="field44" formControlName="field44" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Nominee Phone" />
-        <div *ngIf="form.get('field44')?.touched && form.get('field44')?.invalid"
-          class="text-red-500 text-xs">Nominee Phone is required</div>
-      </div>
-    </div>
-    <div>
-        <label for="field5" class="block text-sm font-medium text-gray-700" title="Enter value for Field 5">
-            Limitations On The Decision-Making Authority Of My Agent Are As Follows
+<div class="max-h-screen overflow-y-auto p-4">
+  <form [formGroup]="form" (ngSubmit)="submitForm()" class="max-w-6xl mx-auto space-y-6">
+
+    <!-- Card: Nominee Information -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-2xl font-semibold mb-4">Nominee Information</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+        <!-- Field 41: Name -->
+        <div>
+          <label for="field41" class="block text-sm font-medium text-gray-700" title="Enter your name">
+            Name
           </label>
-      <div>
-        <input id="field1" formControlName="field1" type="text" 
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 1" />
-      </div>
-      <div>
-        <input id="field2" formControlName="field2" type="text" 
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 2" />
-      </div>
-      <div>
-        <input id="field3" formControlName="field3" type="text" 
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 3" />
-      </div>
-      <div>
-        <input id="field4" formControlName="field4" type="text" 
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 4" />
+          <input id="field41" formControlName="field41" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Name" />
+        </div>
+        <!-- Field 42: Nominee -->
+        <div>
+          <label for="field42" class="block text-sm font-medium text-gray-700" title="Enter nominee name">
+            Nominee
+          </label>
+          <input id="field42" formControlName="field42" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Nominee" />
+        </div>
+        <!-- Field 43: Nominee Address -->
+        <div>
+          <label for="field43" class="block text-sm font-medium text-gray-700" title="Enter nominee address">
+            Nominee Address
+          </label>
+          <input id="field43" formControlName="field43" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Nominee Address" />
+        </div>
+        <!-- Field 44: Nominee Phone -->
+        <div>
+          <label for="field44" class="block text-sm font-medium text-gray-700" title="Enter nominee phone number">
+            Nominee Phone
+          </label>
+          <input id="field44" formControlName="field44" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Nominee Phone" />
+        </div>
       </div>
     </div>
 
-      <!-- Field 5 -->
-      <div>
-        <label for="field5" class="block text-sm font-medium text-gray-700" title="Enter value for Field 5">
-          Field 5 <span class="text-red-500">*</span>
-        </label>
-        <input id="field5" formControlName="field5" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 5" />
-        <div *ngIf="form.get('field5')?.touched && form.get('field5')?.invalid"
-          class="text-red-500 text-xs">Field 5 is required</div>
+    <!-- Card: Agent Limitations -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-2xl font-semibold mb-4">Limitations on Agent's Decision-Making Authority</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+        <!-- Field 1 -->
+        <div>
+          <label for="field1" class="block text-sm font-medium text-gray-700">Field 1</label>
+          <input id="field1" formControlName="field1" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Field 1" />
+        </div>
+        <!-- Field 2 -->
+        <div>
+          <label for="field2" class="block text-sm font-medium text-gray-700">Field 2</label>
+          <input id="field2" formControlName="field2" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Field 2" />
+        </div>
+        <!-- Field 3 -->
+        <div>
+          <label for="field3" class="block text-sm font-medium text-gray-700">Field 3</label>
+          <input id="field3" formControlName="field3" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Field 3" />
+        </div>
+        <!-- Field 4 -->
+        <div>
+          <label for="field4" class="block text-sm font-medium text-gray-700">Field 4</label>
+          <input id="field4" formControlName="field4" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Field 4" />
+        </div>
       </div>
-      <!-- Field 6 -->
-      <div>
-        <label for="field6" class="block text-sm font-medium text-gray-700" title="Enter value for Field 6">
-          Field 6 <span class="text-red-500">*</span>
-        </label>
-        <input id="field6" formControlName="field6" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 6" />
-        <div *ngIf="form.get('field6')?.touched && form.get('field6')?.invalid"
-          class="text-red-500 text-xs">Field 6 is required</div>
-      </div>
-      <!-- Field 7 -->
-      <div>
-        <label for="field7" class="block text-sm font-medium text-gray-700" title="Enter value for Field 7">
-          Field 7 <span class="text-red-500">*</span>
-        </label>
-        <input id="field7" formControlName="field7" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 7" />
-        <div *ngIf="form.get('field7')?.touched && form.get('field7')?.invalid"
-          class="text-red-500 text-xs">Field 7 is required</div>
-      </div>
-      <!-- Field 8 -->
-      <div>
-        <label for="field8" class="block text-sm font-medium text-gray-700" title="Enter value for Field 8">
-          Field 8 <span class="text-red-500">*</span>
-        </label>
-        <input id="field8" formControlName="field8" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 8" />
-        <div *ngIf="form.get('field8')?.touched && form.get('field8')?.invalid"
-          class="text-red-500 text-xs">Field 8 is required</div>
-      </div>
-      <!-- Field 9 -->
-      <div>
-        <label for="field9" class="block text-sm font-medium text-gray-700" title="Enter value for Field 9">
-          Field 9 <span class="text-red-500">*</span>
-        </label>
-        <input id="field9" formControlName="field9" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 9" />
-        <div *ngIf="form.get('field9')?.touched && form.get('field9')?.invalid"
-          class="text-red-500 text-xs">Field 9 is required</div>
-      </div>
-      <!-- Field 10 -->
-      <div>
-        <label for="field10" class="block text-sm font-medium text-gray-700" title="Enter value for Field 10">
-          Field 10 <span class="text-red-500">*</span>
-        </label>
-        <input id="field10" formControlName="field10" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 10" />
-        <div *ngIf="form.get('field10')?.touched && form.get('field10')?.invalid"
-          class="text-red-500 text-xs">Field 10 is required</div>
-      </div>
-      <!-- Field 11 -->
-      <div>
-        <label for="field11" class="block text-sm font-medium text-gray-700" title="Enter value for Field 11">
-          Field 11 <span class="text-red-500">*</span>
-        </label>
-        <input id="field11" formControlName="field11" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 11" />
-        <div *ngIf="form.get('field11')?.touched && form.get('field11')?.invalid"
-          class="text-red-500 text-xs">Field 11 is required</div>
-      </div>
-      <!-- Field 12 -->
-      <div>
-        <label for="field12" class="block text-sm font-medium text-gray-700" title="Enter value for Field 12">
-          Field 12 <span class="text-red-500">*</span>
-        </label>
-        <input id="field12" formControlName="field12" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 12" />
-        <div *ngIf="form.get('field12')?.touched && form.get('field12')?.invalid"
-          class="text-red-500 text-xs">Field 12 is required</div>
-      </div>
-      <!-- Field 13 -->
-      <div>
-        <label for="field13" class="block text-sm font-medium text-gray-700" title="Enter value for Field 13">
-          Field 13 <span class="text-red-500">*</span>
-        </label>
-        <input id="field13" formControlName="field13" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 13" />
-        <div *ngIf="form.get('field13')?.touched && form.get('field13')?.invalid"
-          class="text-red-500 text-xs">Field 13 is required</div>
-      </div>
-      <!-- Field 14 -->
-      <div>
-        <label for="field14" class="block text-sm font-medium text-gray-700" title="Enter value for Field 14">
-          Field 14 <span class="text-red-500">*</span>
-        </label>
-        <input id="field14" formControlName="field14" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 14" />
-        <div *ngIf="form.get('field14')?.touched && form.get('field14')?.invalid"
-          class="text-red-500 text-xs">Field 14 is required</div>
-      </div>
-      <!-- Field 15 -->
-      <div>
-        <label for="field15" class="block text-sm font-medium text-gray-700" title="Enter value for Field 15">
-          Field 15 <span class="text-red-500">*</span>
-        </label>
-        <input id="field15" formControlName="field15" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 15" />
-        <div *ngIf="form.get('field15')?.touched && form.get('field15')?.invalid"
-          class="text-red-500 text-xs">Field 15 is required</div>
-      </div>
-      <!-- Field 16 -->
-      <div>
-        <label for="field16" class="block text-sm font-medium text-gray-700" title="Enter value for Field 16">
-          Field 16 <span class="text-red-500">*</span>
-        </label>
-        <input id="field16" formControlName="field16" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 16" />
-        <div *ngIf="form.get('field16')?.touched && form.get('field16')?.invalid"
-          class="text-red-500 text-xs">Field 16 is required</div>
-      </div>
-      <!-- Field 17 -->
-      <div>
-        <label for="field17" class="block text-sm font-medium text-gray-700" title="Enter value for Field 17">
-          Field 17 <span class="text-red-500">*</span>
-        </label>
-        <input id="field17" formControlName="field17" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 17" />
-        <div *ngIf="form.get('field17')?.touched && form.get('field17')?.invalid"
-          class="text-red-500 text-xs">Field 17 is required</div>
-      </div>
-      <!-- Field 18 -->
-      <div>
-        <label for="field18" class="block text-sm font-medium text-gray-700" title="Enter value for Field 18">
-          Field 18 <span class="text-red-500">*</span>
-        </label>
-        <input id="field18" formControlName="field18" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 18" />
-        <div *ngIf="form.get('field18')?.touched && form.get('field18')?.invalid"
-          class="text-red-500 text-xs">Field 18 is required</div>
-      </div>
-      <!-- Field 19 -->
-      <div>
-        <label for="field19" class="block text-sm font-medium text-gray-700" title="Enter value for Field 19">
-          Field 19 <span class="text-red-500">*</span>
-        </label>
-        <input id="field19" formControlName="field19" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 19" />
-        <div *ngIf="form.get('field19')?.touched && form.get('field19')?.invalid"
-          class="text-red-500 text-xs">Field 19 is required</div>
-      </div>
-      <!-- Field 20 -->
-      <div>
-        <label for="field20" class="block text-sm font-medium text-gray-700" title="Enter value for Field 20">
-          Field 20 <span class="text-red-500">*</span>
-        </label>
-        <input id="field20" formControlName="field20" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 20" />
-        <div *ngIf="form.get('field20')?.touched && form.get('field20')?.invalid"
-          class="text-red-500 text-xs">Field 20 is required</div>
-      </div>
-      <!-- Field 21 -->
-      <div>
-        <label for="field21" class="block text-sm font-medium text-gray-700" title="Enter value for Field 21">
-          Field 21 <span class="text-red-500">*</span>
-        </label>
-        <input id="field21" formControlName="field21" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 21" />
-        <div *ngIf="form.get('field21')?.touched && form.get('field21')?.invalid"
-          class="text-red-500 text-xs">Field 21 is required</div>
-      </div>
-      <!-- Field 22 -->
-      <div>
-        <label for="field22" class="block text-sm font-medium text-gray-700" title="Enter value for Field 22">
-          Field 22 <span class="text-red-500">*</span>
-        </label>
-        <input id="field22" formControlName="field22" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 22" />
-        <div *ngIf="form.get('field22')?.touched && form.get('field22')?.invalid"
-          class="text-red-500 text-xs">Field 22 is required</div>
-      </div>
-      <!-- Field 23 -->
-      <div>
-        <label for="field23" class="block text-sm font-medium text-gray-700" title="Enter value for Field 23">
-          Field 23 <span class="text-red-500">*</span>
-        </label>
-        <input id="field23" formControlName="field23" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 23" />
-        <div *ngIf="form.get('field23')?.touched && form.get('field23')?.invalid"
-          class="text-red-500 text-xs">Field 23 is required</div>
-      </div>
-      <!-- Field 24 -->
-      <div>
-        <label for="field24" class="block text-sm font-medium text-gray-700" title="Enter value for Field 24">
-          Field 24 <span class="text-red-500">*</span>
-        </label>
-        <input id="field24" formControlName="field24" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 24" />
-        <div *ngIf="form.get('field24')?.touched && form.get('field24')?.invalid"
-          class="text-red-500 text-xs">Field 24 is required</div>
-      </div>
-      <!-- Field 25 -->
-      <div>
-        <label for="field25" class="block text-sm font-medium text-gray-700" title="Enter value for Field 25">
-          Field 25 <span class="text-red-500">*</span>
-        </label>
-        <input id="field25" formControlName="field25" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 25" />
-        <div *ngIf="form.get('field25')?.touched && form.get('field25')?.invalid"
-          class="text-red-500 text-xs">Field 25 is required</div>
-      </div>
-      <!-- Field 26 -->
-      <div>
-        <label for="field26" class="block text-sm font-medium text-gray-700" title="Enter value for Field 26">
-          Field 26 <span class="text-red-500">*</span>
-        </label>
-        <input id="field26" formControlName="field26" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 26" />
-        <div *ngIf="form.get('field26')?.touched && form.get('field26')?.invalid"
-          class="text-red-500 text-xs">Field 26 is required</div>
-      </div>
-      <!-- Field 27 -->
-      <div>
-        <label for="field27" class="block text-sm font-medium text-gray-700" title="Enter value for Field 27">
-          Field 27 <span class="text-red-500">*</span>
-        </label>
-        <input id="field27" formControlName="field27" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 27" />
-        <div *ngIf="form.get('field27')?.touched && form.get('field27')?.invalid"
-          class="text-red-500 text-xs">Field 27 is required</div>
-      </div>
-      <!-- Field 28 -->
-      <div>
-        <label for="field28" class="block text-sm font-medium text-gray-700" title="Enter value for Field 28">
-          Field 28 <span class="text-red-500">*</span>
-        </label>
-        <input id="field28" formControlName="field28" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 28" />
-        <div *ngIf="form.get('field28')?.touched && form.get('field28')?.invalid"
-          class="text-red-500 text-xs">Field 28 is required</div>
-      </div>
-      <!-- Field 29 -->
-      <div>
-        <label for="field29" class="block text-sm font-medium text-gray-700" title="Enter value for Field 29">
-          Field 29 <span class="text-red-500">*</span>
-        </label>
-        <input id="field29" formControlName="field29" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 29" />
-        <div *ngIf="form.get('field29')?.touched && form.get('field29')?.invalid"
-          class="text-red-500 text-xs">Field 29 is required</div>
-      </div>
-      <!-- Field 30 -->
-      <div>
-        <label for="field30" class="block text-sm font-medium text-gray-700" title="Enter value for Field 30">
-          Field 30 <span class="text-red-500">*</span>
-        </label>
-        <input id="field30" formControlName="field30" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 30" />
-        <div *ngIf="form.get('field30')?.touched && form.get('field30')?.invalid"
-          class="text-red-500 text-xs">Field 30 is required</div>
-      </div>
-      <!-- Field 31 -->
-      <div>
-        <label for="field31" class="block text-sm font-medium text-gray-700" title="Enter value for Field 31">
-          Field 31 <span class="text-red-500">*</span>
-        </label>
-        <input id="field31" formControlName="field31" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 31" />
-        <div *ngIf="form.get('field31')?.touched && form.get('field31')?.invalid"
-          class="text-red-500 text-xs">Field 31 is required</div>
-      </div>
-      <!-- Field 32 -->
-      <div>
-        <label for="field32" class="block text-sm font-medium text-gray-700" title="Enter value for Field 32">
-          Field 32 <span class="text-red-500">*</span>
-        </label>
-        <input id="field32" formControlName="field32" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 32" />
-        <div *ngIf="form.get('field32')?.touched && form.get('field32')?.invalid"
-          class="text-red-500 text-xs">Field 32 is required</div>
-      </div>
-      <!-- Field 33 -->
-      <div>
-        <label for="field33" class="block text-sm font-medium text-gray-700" title="Enter value for Field 33">
-          Field 33 <span class="text-red-500">*</span>
-        </label>
-        <input id="field33" formControlName="field33" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 33" />
-        <div *ngIf="form.get('field33')?.touched && form.get('field33')?.invalid"
-          class="text-red-500 text-xs">Field 33 is required</div>
-      </div>
-      <!-- Field 34 -->
-      <div>
-        <label for="field34" class="block text-sm font-medium text-gray-700" title="Enter value for Field 34">
-          Field 34 <span class="text-red-500">*</span>
-        </label>
-        <input id="field34" formControlName="field34" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 34" />
-        <div *ngIf="form.get('field34')?.touched && form.get('field34')?.invalid"
-          class="text-red-500 text-xs">Field 34 is required</div>
-      </div>
-      <!-- Field 35 -->
-      <div>
-        <label for="field35" class="block text-sm font-medium text-gray-700" title="Enter value for Field 35">
-          Field 35 <span class="text-red-500">*</span>
-        </label>
-        <input id="field35" formControlName="field35" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 35" />
-        <div *ngIf="form.get('field35')?.touched && form.get('field35')?.invalid"
-          class="text-red-500 text-xs">Field 35 is required</div>
-      </div>
-      <!-- Field 36 -->
-      <div>
-        <label for="field36" class="block text-sm font-medium text-gray-700" title="Enter value for Field 36">
-          Field 36 <span class="text-red-500">*</span>
-        </label>
-        <input id="field36" formControlName="field36" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 36" />
-        <div *ngIf="form.get('field36')?.touched && form.get('field36')?.invalid"
-          class="text-red-500 text-xs">Field 36 is required</div>
-      </div>
-      <!-- Field 37 -->
-      <div>
-        <label for="field37" class="block text-sm font-medium text-gray-700" title="Enter value for Field 37">
-          Field 37 <span class="text-red-500">*</span>
-        </label>
-        <input id="field37" formControlName="field37" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 37" />
-        <div *ngIf="form.get('field37')?.touched && form.get('field37')?.invalid"
-          class="text-red-500 text-xs">Field 37 is required</div>
-      </div>
-      <!-- Field 38 -->
-      <div>
-        <label for="field38" class="block text-sm font-medium text-gray-700" title="Enter value for Field 38">
-          Field 38 <span class="text-red-500">*</span>
-        </label>
-        <input id="field38" formControlName="field38" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 38" />
-        <div *ngIf="form.get('field38')?.touched && form.get('field38')?.invalid"
-          class="text-red-500 text-xs">Field 38 is required</div>
-      </div>
-      <!-- Field 39 -->
-      <div>
-        <label for="field39" class="block text-sm font-medium text-gray-700" title="Enter value for Field 39">
-          Field 39 <span class="text-red-500">*</span>
-        </label>
-        <input id="field39" formControlName="field39" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 39" />
-        <div *ngIf="form.get('field39')?.touched && form.get('field39')?.invalid"
-          class="text-red-500 text-xs">Field 39 is required</div>
-      </div>
-      <!-- Field 40 -->
-      <div>
-        <label for="field40" class="block text-sm font-medium text-gray-700" title="Enter value for Field 40">
-          Field 40 <span class="text-red-500">*</span>
-        </label>
-        <input id="field40" formControlName="field40" type="text" required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          placeholder="Field 40" />
-        <div *ngIf="form.get('field40')?.touched && form.get('field40')?.invalid"
-          class="text-red-500 text-xs">Field 40 is required</div>
-      </div>
-      <!-- Field 41: Name -->
+    </div>
 
-      <!-- Field 46: Checkbox for Consent -->
-      <div class="col-span-2 flex items-center">
-        <input id="field46" type="checkbox" formControlName="field46"
-          class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-        <label for="field46" class="ml-2 block text-sm text-gray-700" title="Check if you agree">
-          I agree to the terms and conditions
-        </label>
+    <!-- Card: Alternate Agents -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-2xl font-semibold mb-4">Alternate Agents</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+        <!-- Field 5: Name of first alternate agent -->
+        <div>
+          <label for="field5" class="block text-sm font-medium text-gray-700">
+            Name of first alternate agent
+          </label>
+          <input id="field5" formControlName="field5" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Name of first alternate agent" />
+        </div>
+        <!-- Field 6: Address of first alternate agent -->
+        <div>
+          <label for="field6" class="block text-sm font-medium text-gray-700">
+            Address of first alternate agent
+          </label>
+          <input id="field6" formControlName="field6" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Address of first alternate agent" />
+        </div>
+        <!-- Field 7: Phone Number of first alternate agent -->
+        <div>
+          <label for="field7" class="block text-sm font-medium text-gray-700">
+            Phone Number of first alternate agent
+          </label>
+          <input id="field7" formControlName="field7" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Phone Number of first alternate agent" />
+        </div>
+        <!-- Field 8: Name of second alternate agent -->
+        <div>
+          <label for="field8" class="block text-sm font-medium text-gray-700">
+            Name of second alternate agent
+          </label>
+          <input id="field8" formControlName="field8" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Name of second alternate agent" />
+        </div>
+        <!-- Field 9: Address of second alternate agent -->
+        <div>
+          <label for="field9" class="block text-sm font-medium text-gray-700">
+            Address of second alternate agent
+          </label>
+          <input id="field9" formControlName="field9" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Address of second alternate agent" />
+        </div>
+        <!-- Field 10: Phone Number of second alternate agent -->
+        <div>
+          <label for="field10" class="block text-sm font-medium text-gray-700">
+            Phone Number of second alternate agent
+          </label>
+          <input id="field10" formControlName="field10" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Phone Number of second alternate agent" />
+        </div>
       </div>
     </div>
-    <!-- Buttons -->
-    <div class="flex flex-wrap gap-6 mt-8 justify-center">
-      <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700">
-        Submit
-      </button>
-      <button type="button" (click)="downloadPdf()" class="px-6 py-3 bg-green-600 text-white rounded hover:bg-green-700">
-        Download PDF
-      </button>
-      <button type="button" (click)="resetForm()" class="px-6 py-3 bg-red-600 text-white rounded hover:bg-red-700">
-        Reset
-      </button>
+
+    <!-- Card: Additional Information -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-2xl font-semibold mb-4">Additional Information</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+        <!-- Field 11: Original document kept -->
+        <div>
+          <label for="field11" class="block text-sm font-medium text-gray-700">
+            Original document kept
+          </label>
+          <input id="field11" formControlName="field11" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Original document kept" />
+        </div>
+        <!-- Field 12: Individual's name -->
+        <div>
+          <label for="field12" class="block text-sm font-medium text-gray-700">
+            Individual's name
+          </label>
+          <input id="field12" formControlName="field12" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Individual's name" />
+        </div>
+        <!-- Field 13: Individual's Address -->
+        <div>
+          <label for="field13" class="block text-sm font-medium text-gray-700">
+            Individual's Address
+          </label>
+          <input id="field13" formControlName="field13" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Individual's Address" />
+        </div>
+        <!-- Field 14: Individual's name -->
+        <div>
+          <label for="field14" class="block text-sm font-medium text-gray-700">
+            Individual's name
+          </label>
+          <input id="field14" formControlName="field14" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Individual's name" />
+        </div>
+        <!-- Field 15: Individual's Address -->
+        <div>
+          <label for="field15" class="block text-sm font-medium text-gray-700">
+            Individual's Address
+          </label>
+          <input id="field15" formControlName="field15" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Individual's Address" />
+        </div>
+        <!-- Field 16: Power of attorney ends on -->
+        <div>
+          <label for="field16" class="block text-sm font-medium text-gray-700">
+            Power of attorney ends on
+          </label>
+          <input id="field16" formControlName="field16" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Power of attorney ends on" />
+        </div>
+        <!-- Field 17: Day of month -->
+        <div>
+          <label for="field17" class="block text-sm font-medium text-gray-700">
+            Day of month
+          </label>
+          <input id="field17" formControlName="field17" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Day of month" />
+        </div>
+        <!-- Field 18: Month and year -->
+        <div>
+          <label for="field18" class="block text-sm font-medium text-gray-700">
+            Month and year
+          </label>
+          <input id="field18" formControlName="field18" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Month and year" />
+        </div>
+        <!-- Field 19: City and state -->
+        <div>
+          <label for="field19" class="block text-sm font-medium text-gray-700">
+            City and state
+          </label>
+          <input id="field19" formControlName="field19" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="City and state" />
+        </div>
+        <!-- Field 20: Print name -->
+        <div>
+          <label for="field20" class="block text-sm font-medium text-gray-700">
+            Print name
+          </label>
+          <input id="field20" formControlName="field20" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Print name" />
+        </div>
+      </div>
     </div>
+
+    <!-- Card: Witnesses & Notary -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-2xl font-semibold mb-4">Witnesses & Notary</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+        <!-- Field 21: Name of witness one -->
+        <div>
+          <label for="field21" class="block text-sm font-medium text-gray-700">
+            Name of witness one
+          </label>
+          <input id="field21" formControlName="field21" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Name of witness one" />
+        </div>
+        <!-- Field 22: Date -->
+        <div>
+          <label for="field22" class="block text-sm font-medium text-gray-700">
+            Date
+          </label>
+          <input id="field22" formControlName="field22" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Date" />
+        </div>
+        <!-- Field 23: Name of person acknowledging -->
+        <div>
+          <label for="field23" class="block text-sm font-medium text-gray-700">
+            Name of person acknowledging
+          </label>
+          <input id="field23" formControlName="field23" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Name of person acknowledging" />
+        </div>
+        <!-- Field 24: Notary's printed name -->
+        <div>
+          <label for="field24" class="block text-sm font-medium text-gray-700">
+            Notary's printed name
+          </label>
+          <input id="field24" formControlName="field24" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Notary's printed name" />
+        </div>
+        <!-- Field 25: My commission expires -->
+        <div>
+          <label for="field25" class="block text-sm font-medium text-gray-700">
+            My commission expires
+          </label>
+          <input id="field25" formControlName="field25" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="My commission expires" />
+        </div>
+        <!-- Field 26: Day of month -->
+        <div>
+          <label for="field26" class="block text-sm font-medium text-gray-700">
+            Day of month
+          </label>
+          <input id="field26" formControlName="field26" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Day of month" />
+        </div>
+        <!-- Field 27: Month and year -->
+        <div>
+          <label for="field27" class="block text-sm font-medium text-gray-700">
+            Month and year
+          </label>
+          <input id="field27" formControlName="field27" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Month and year" />
+        </div>
+        <!-- Field 28: City and state -->
+        <div>
+          <label for="field28" class="block text-sm font-medium text-gray-700">
+            City and state
+          </label>
+          <input id="field28" formControlName="field28" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="City and state" />
+        </div>
+        <!-- Field 29: Print name -->
+        <div>
+          <label for="field29" class="block text-sm font-medium text-gray-700">
+            Print name
+          </label>
+          <input id="field29" formControlName="field29" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Print name" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Miscellaneous Fields -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-2xl font-semibold mb-4">Miscellaneous</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+        <!-- Field 36 -->
+        <div>
+          <label for="field36" class="block text-sm font-medium text-gray-700">Field 36</label>
+          <input id="field36" formControlName="field36" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Field 36" />
+        </div>
+        <!-- Field 37 -->
+        <div>
+          <label for="field37" class="block text-sm font-medium text-gray-700">Field 37</label>
+          <input id="field37" formControlName="field37" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Field 37" />
+        </div>
+        <!-- Field 38 -->
+        <div>
+          <label for="field38" class="block text-sm font-medium text-gray-700">Field 38</label>
+          <input id="field38" formControlName="field38" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Field 38" />
+        </div>
+        <!-- Field 39 -->
+        <div>
+          <label for="field39" class="block text-sm font-medium text-gray-700">Field 39</label>
+          <input id="field39" formControlName="field39" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Field 39" />
+        </div>
+        <!-- Field 40 -->
+        <div>
+          <label for="field40" class="block text-sm font-medium text-gray-700">Field 40</label>
+          <input id="field40" formControlName="field40" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            placeholder="Field 40" />
+        </div>
+      </div>
+    </div>
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
   </form>
-  
+</div>

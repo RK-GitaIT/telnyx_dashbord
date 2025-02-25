@@ -1,19 +1,32 @@
-<div class="p-5 space-y-4">
-    <select [(ngModel)]="selectedFormType" class="border p-2 w-full">
-      <option value="">Select Form</option>
-      <option value="mpa-form">Medical Power Of Attorney</option>
-      <option value="hipaa-form">HIPAA Release Form</option>
-    </select>
+<div class="p-3">
+    <div class="grid grid-cols-2 gap-4 items-center">
+      <!-- Left Column: Form Type Selector -->
+      <div>
+        <select [(ngModel)]="selectedFormType" class="border p-2 w-full rounded-md">
+          <option value="">Select Form</option>
+          <option value="mpa-form">Medical Power Of Attorney</option>
+          <option value="hipaa-form">HIPAA Release Form</option>
+        </select>
+      </div>
+      <!-- Right Column: Action Buttons -->
+      <div class="flex justify-end space-x-2">
+        <button
+          (click)="handleDownloadPdf()"
+          class="flex items-center px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <span class="mr-1">⬇️</span> Download PDF
+        </button>
+        <button
+          (click)="handleCancel()"
+          class="flex items-center px-3 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
+          <span class="mr-1">🚫</span> Crear
+        </button>
+      </div>
+    </div>
   </div>
-
-  <div class="actions" *ngIf="selectedFormType">
-    <button (click)="handleDownloadPdf()">⬇️ Download PDF</button>
-    <button (click)="submitChildForm()">✅ Submit</button>
-    <button (click)="handleCancel()">🚫 Cancel</button>
-  </div>
-
-  <hr/>
-
+  
+  <hr class="my-2" />
+  
+  <!-- Form Display -->
   <ng-container [ngSwitch]="selectedFormType">
     <app-mpa-form
       *ngSwitchCase="'mpa-form'"
@@ -21,7 +34,7 @@
       (formSubmitted)="handleFormSubmit($event)"
       (resetTriggered)="handleResetTriggered()">
     </app-mpa-form>
-
+  
     <app-hippa-form
       *ngSwitchCase="'hipaa-form'"
       #childComponent
@@ -29,8 +42,10 @@
       (resetTriggered)="handleResetTriggered()">
     </app-hippa-form>
   </ng-container>
-
-  <div *ngIf="isFormSubmitted" class="success">
-    <h3>🎉 Submission Successful!</h3>
-    <pre>{{ formData | json }}</pre>
+  
+  <!-- Success Message -->
+  <div *ngIf="isFormSubmitted" class="p-3 bg-green-50 border border-green-200 rounded-md mt-4">
+    <h3 class="text-lg font-semibold text-green-700">🎉 Submission Successful!</h3>
+    <pre class="mt-1 text-sm text-gray-700">{{ formData | json }}</pre>
   </div>
+  
