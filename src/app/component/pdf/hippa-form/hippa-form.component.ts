@@ -22,8 +22,8 @@ export class HipaaFormComponent implements PDFFormInterface, OnInit {
 
   // Mapping between reactive form controls and the actual PDF field names.
   public fieldMapping: { [controlName: string]: string } = {
-    labelName: 'form_MPOA[0].page1[0].s1[0].p2[0].TextField1[0]', 
-    company:   'form_MPOA[0].page1[0].s1[0].p2[0].TextField1[1]'
+    PersonName: 'form_MPOA[0].page1[0].s1[0].p1[0].TextField1[0]', 
+    PrintName:   'form_MPOA[0].page1[0].s1[0].p1[0].TextField1[1]'
   };
 
   constructor(private fb: FormBuilder) {

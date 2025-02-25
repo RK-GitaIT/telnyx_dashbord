@@ -3,18 +3,18 @@
     <!-- Wrap inputs inside a formGroup to fix the NG01050 error -->
     <form [formGroup]="mappingForm">
       <div class="form-group">
-        <label for="labelName">
-          Label Name 
-          <small>(PDF Field: {{ fieldMapping['labelName'] }})</small>
+        <label for="PersonName">
+          Person's Name 
+          <small>(PDF Field: {{ fieldMapping['PersonName'] }})</small>
         </label>
-        <input id="labelName" type="text" formControlName="labelName" placeholder="Enter label name" />
+        <input id="PersonName" type="text" formControlName="PersonName" placeholder="Enter name" />
       </div>
       <div class="form-group">
-        <label for="company">
-          Company 
-          <small>(PDF Field: {{ fieldMapping['Company'] }})</small>
+        <label for="PrintName">
+          Name 
+          <small>(PDF Field: {{ fieldMapping['PrintName'] }})</small>
         </label>
-        <input id="company" type="text" formControlName="company" placeholder="Enter company name" />
+        <input id="PrintName" type="text" formControlName="PrintName" placeholder="Enter name" />
       </div>
       <!-- Add additional form fields manually as needed -->
     </form>
